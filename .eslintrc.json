@@ -1,7 +1,7 @@
 {
   "env": {
-    "browser": true,
-    "es2021": true
+    "es2021": true,
+    "node": true
   },
   "extends": [
     "eslint:recommended",
@@ -14,7 +14,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "react", "prettier"],
+  "plugins": ["@typescript-eslint", "react", "react-native", "prettier"],
   "rules": {
     "prettier/prettier": "error"
   }
