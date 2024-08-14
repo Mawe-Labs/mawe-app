@@ -1,14 +1,12 @@
 import React from 'react';
-import {SafeAreaView, View} from 'react-native';
+import {SafeAreaView} from 'react-native';
 
-import {Title} from './App';
+import Home from './screens/Home/home.screen';
 
 function App(): React.JSX.Element {
   return (
     <SafeAreaView>
-      <View>
-        <Title>Olá, MaweApp!</Title>
-      </View>
+      <Home />
     </SafeAreaView>
   );
 }
