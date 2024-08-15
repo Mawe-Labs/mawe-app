@@ -12,8 +12,9 @@ import {Picker} from '@react-native-picker/picker';
 import {TextInputMask} from 'react-native-masked-text';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CheckBox from '@react-native-community/checkbox';
+import {categories} from '../../mocks/categories.mock';
 
-const NovoItemScreen: React.FC = () => {
+const NewItem: React.FC = () => {
   const [selectedUnit, setSelectedUnit] = useState('un');
   const [price, setPrice] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -48,7 +49,7 @@ const NovoItemScreen: React.FC = () => {
             <Picker
               selectedValue={selectedUnit}
               style={styles.picker}
-              onValueChange={itemValue => setSelectedUnit(itemValue)}>
+              onValueChange={(itemValue) => setSelectedUnit(itemValue)}>
               <Picker.Item label="un" value="un" />
               <Picker.Item label="2" value="2" />
               <Picker.Item label="3" value="3" />
@@ -73,7 +74,7 @@ const NovoItemScreen: React.FC = () => {
                   suffixUnit: '',
                 }}
                 value={price}
-                onChangeText={text => setPrice(text)}
+                onChangeText={(text) => setPrice(text)}
                 style={styles.priceInput}
               />
             </View>
@@ -101,18 +102,10 @@ const NovoItemScreen: React.FC = () => {
           <Picker
             selectedValue={selectedCategory}
             style={styles.picker}
-            onValueChange={itemValue => setSelectedCategory(itemValue)}>
-            <Picker.Item label="All" value="All" />
-            <Picker.Item label="Bazar" value="Bazar e Limpeza" />
-            <Picker.Item label="Bebidas" value="Bebidas" />
-            <Picker.Item label="refeições prontas" value="Refeições Prontas" />
-            <Picker.Item label="geladeira" value="Geladeira" />
-            <Picker.Item label="frutas, vegetais" value="Frutas, Vegetais" />
-            <Picker.Item label="higiene pessoal" value="Higiene Pessoal" />
-            <Picker.Item label="importados" value="Importados" />
-            <Picker.Item label="mercearia" value="Mercearia" />
-            <Picker.Item label="padaria" value="Padaria" />
-            <Picker.Item label="saúde e beleza" value="Saúde e Beleza" />
+            onValueChange={(itemValue) => setSelectedCategory(itemValue)}>
+            {categories.map((category) => (
+              <Picker.Item key={category.id} label={category.name} value={category.name} />
+            ))}
           </Picker>
         </View>
 
@@ -241,4 +234,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NovoItemScreen;
+export default NewItem;
