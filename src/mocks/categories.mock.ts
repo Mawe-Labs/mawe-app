@@ -1,4 +1,14 @@
 import banana from '../assets/products/banana.png';
+import detergent from '../assets/products/detergent.png';
+import limon from '../assets/products/limon.png';
+import corn from '../assets/products/corn.png';
+import meat from '../assets/products/meat.png';
+import sausage from '../assets/products/sausage.png';
+import gratedCheese from '../assets/products/grated-cheese.png';
+import popcorn from '../assets/products/popcorn.png';
+import coca from '../assets/products/coca.png';
+import carrot from '../assets/products/carrot.png';
+import bread from '../assets/products/bread.png';
 
 export const categories = [
   {
@@ -13,55 +23,55 @@ export const categories = [
       },
       {
         id: 2,
-        image: '',
+        image: limon,
         name: 'Limão',
         value: 20,
       },
       {
         id: 3,
-        image: '',
+        image: corn,
         name: 'Milho',
         value: 20,
       },
       {
         id: 4,
-        image: '',
+        image: meat,
         name: 'Carne',
         value: 20,
       },
       {
         id: 5,
-        image: '',
+        image: sausage,
         name: 'Salsicha',
         value: 20,
       },
       {
         id: 6,
-        image: '',
+        image: carrot,
         name: 'Cenoura',
         value: 20,
       },
       {
         id: 7,
-        image: '',
+        image: detergent,
         name: 'Detergente',
         value: 20,
       },
       {
         id: 8,
-        image: '',
+        image: coca,
         name: 'Coca',
         value: 20,
       },
       {
         id: 9,
-        image: '',
+        image: popcorn,
         name: 'Pipoca',
         value: 20,
       },
       {
         id: 10,
-        image: '',
+        image: gratedCheese,
         name: 'Queijo ralado',
         value: 20,
       },
@@ -73,7 +83,7 @@ export const categories = [
     products: [
       {
         id: 1,
-        image: '',
+        image: detergent,
         name: 'Detergente',
         value: 20,
       },
@@ -85,7 +95,7 @@ export const categories = [
     products: [
       {
         id: 1,
-        image: '',
+        image: coca,
         name: 'Coca',
         value: 20,
       },
@@ -97,13 +107,13 @@ export const categories = [
     products: [
       {
         id: 1,
-        image: '',
+        image: meat,
         name: 'Carne',
         value: 20,
       },
       {
         id: 2,
-        image: '',
+        image: sausage,
         name: 'Salsicha',
         value: 20,
       },
@@ -111,7 +121,7 @@ export const categories = [
   },
   {
     id: 5,
-    name: 'Frutas e Vegetais',
+    name: 'Frutas, Vegetais e Legumes',
     products: [
       {
         id: 1,
@@ -121,14 +131,20 @@ export const categories = [
       },
       {
         id: 2,
-        image: '',
+        image: limon,
         name: 'Limão',
         value: 20,
       },
       {
         id: 3,
-        image: '',
+        image: carrot,
         name: 'Cenoura',
+        value: 20,
+      },
+      {
+        id: 4,
+        image: corn,
+        name: 'Milho',
         value: 20,
       },
     ],
@@ -149,13 +165,13 @@ export const categories = [
     products: [
       {
         id: 1,
-        image: '',
+        image: popcorn,
         name: 'Pipoca',
         value: 20,
       },
       {
         id: 2,
-        image: '',
+        image: gratedCheese,
         name: 'Queijo ralado',
         value: 20,
       },
@@ -167,7 +183,7 @@ export const categories = [
     products: [
       {
         id: 1,
-        image: '',
+        image: bread,
         name: 'Pão',
         value: 20,
       },
