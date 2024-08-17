@@ -82,7 +82,7 @@ export const categories = [
     name: 'Bazar e Limpeza',
     products: [
       {
-        id: 1,
+        id: 11,
         image: detergent,
         name: 'Detergente',
         value: 20,
@@ -94,7 +94,7 @@ export const categories = [
     name: 'Bebidas',
     products: [
       {
-        id: 2,
+        id: 12,
         image: coca,
         name: 'Coca',
         value: 20,
@@ -106,13 +106,13 @@ export const categories = [
     name: 'Geladeira',
     products: [
       {
-        id: 3,
+        id: 13,
         image: meat,
         name: 'Carne',
         value: 20,
       },
       {
-        id: 4,
+        id: 14,
         image: sausage,
         name: 'Salsicha',
         value: 20,
@@ -124,25 +124,25 @@ export const categories = [
     name: 'Frutas, Vegetais e Legumes',
     products: [
       {
-        id: 5,
+        id: 15,
         image: banana,
         name: 'Banana',
         value: 20,
       },
       {
-        id: 6,
+        id: 16,
         image: limon,
         name: 'Limão',
         value: 20,
       },
       {
-        id: 7,
+        id: 17,
         image: carrot,
         name: 'Cenoura',
         value: 20,
       },
       {
-        id: 8,
+        id: 18,
         image: corn,
         name: 'Milho',
         value: 20,
@@ -164,13 +164,13 @@ export const categories = [
     name: 'Mercearia',
     products: [
       {
-        id: 9,
+        id: 19,
         image: popcorn,
         name: 'Pipoca',
         value: 20,
       },
       {
-        id: 10,
+        id: 20,
         image: gratedCheese,
         name: 'Queijo ralado',
         value: 20,
@@ -182,7 +182,7 @@ export const categories = [
     name: 'Padaria',
     products: [
       {
-        id: 11,
+        id: 21,
         image: bread,
         name: 'Pão',
         value: 20,
