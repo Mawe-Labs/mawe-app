@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ImageProps, ScrollView, Text, View} from 'react-native';
+import {ImageProps, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {
   CategoriesContainer,
   ProductContainer,
@@ -10,6 +10,8 @@ import {
 import {categories} from '../../mocks/categories.mock';
 import numberFormat from '../../utils/number-format.util';
 import CheckBox from '@react-native-community/checkbox';
+import ListInformations from '../../components/ListInformations/list-informations.component';
+import {Spacer} from '../../components/global.component';
 
 interface CheckedState {
   [key: number]: boolean;
@@ -58,7 +60,9 @@ export const Home = () => {
             }
           }
         })}
+        <Spacer size={160} />
       </ScrollView>
+      <ListInformations />
     </View>
   );
 };
