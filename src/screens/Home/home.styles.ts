@@ -10,6 +10,11 @@ export const CategoriesContainer = styled.View`
 
 export const ProductContainer = styled.View`
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom-color: ${colors.borderColor};
+  border-bottom-width: 3px;
+  padding: 10px;
 `;
 
 export const ProductImage = styled.Image.attrs({
@@ -17,8 +22,13 @@ export const ProductImage = styled.Image.attrs({
 })`
   width: 70px;
   height: 70px;
+  margin: 0 15px;
 `;
 
 export const ProductText = styled.Text`
   font-size: 22px;
+`;
+
+export const ProductInformations = styled.Text`
+  font-size: 15px;
 `;

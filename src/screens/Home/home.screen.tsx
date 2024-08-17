@@ -1,14 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ImageProps, ScrollView, Text, View} from 'react-native';
 import {
   CategoriesContainer,
   ProductContainer,
   ProductImage,
+  ProductInformations,
   ProductText,
 } from './home.styles';
 import {categories} from '../../mocks/categories.mock';
+import numberFormat from '../../utils/number-format.util';
+import CheckBox from '@react-native-community/checkbox';
+
+interface CheckedState {
+  [key: number]: boolean;
+}
 
 export const Home = () => {
+  const [checked, setChecked] = useState<CheckedState>({});
+
   return (
     <View>
       <ScrollView>
@@ -21,12 +30,27 @@ export const Home = () => {
                     <Text style={{fontSize: 18}}>{category.name}</Text>
                   </CategoriesContainer>
                   {category.products.map((product) => (
-                    <ProductContainer key={product.name}>
-                      <ProductImage
-                        source={product.image as ImageProps}
-                        alt={product.name}
+                    <ProductContainer key={product.id}>
+                      <View
+                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <ProductImage
+                          source={product.image as ImageProps}
+                          alt={product.name}
+                        />
+                        <View>
+                          <ProductText>{product.name}</ProductText>
+                          <ProductInformations>
+                            1 un - {numberFormat(product.value)}
+                          </ProductInformations>
+                        </View>
+                      </View>
+                      <CheckBox
+                        disabled={false}
+                        value={checked[product.id]}
+                        onValueChange={(newValue: boolean) => {
+                          setChecked({...checked, [product.id]: newValue});
+                        }}
                       />
-                      <ProductText>{product.name}</ProductText>
                     </ProductContainer>
                   ))}
                 </>

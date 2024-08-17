@@ -94,7 +94,7 @@ export const categories = [
     name: 'Bebidas',
     products: [
       {
-        id: 1,
+        id: 2,
         image: coca,
         name: 'Coca',
         value: 20,
@@ -106,13 +106,13 @@ export const categories = [
     name: 'Geladeira',
     products: [
       {
-        id: 1,
+        id: 3,
         image: meat,
         name: 'Carne',
         value: 20,
       },
       {
-        id: 2,
+        id: 4,
         image: sausage,
         name: 'Salsicha',
         value: 20,
@@ -124,25 +124,25 @@ export const categories = [
     name: 'Frutas, Vegetais e Legumes',
     products: [
       {
-        id: 1,
+        id: 5,
         image: banana,
         name: 'Banana',
         value: 20,
       },
       {
-        id: 2,
+        id: 6,
         image: limon,
         name: 'Limão',
         value: 20,
       },
       {
-        id: 3,
+        id: 7,
         image: carrot,
         name: 'Cenoura',
         value: 20,
       },
       {
-        id: 4,
+        id: 8,
         image: corn,
         name: 'Milho',
         value: 20,
@@ -164,13 +164,13 @@ export const categories = [
     name: 'Mercearia',
     products: [
       {
-        id: 1,
+        id: 9,
         image: popcorn,
         name: 'Pipoca',
         value: 20,
       },
       {
-        id: 2,
+        id: 10,
         image: gratedCheese,
         name: 'Queijo ralado',
         value: 20,
@@ -182,7 +182,7 @@ export const categories = [
     name: 'Padaria',
     products: [
       {
-        id: 1,
+        id: 11,
         image: bread,
         name: 'Pão',
         value: 20,
