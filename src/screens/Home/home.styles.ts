@@ -32,3 +32,13 @@ export const ProductText = styled.Text`
 export const ProductInformations = styled.Text`
   font-size: 15px;
 `;
+
+export const CircleAddedItem = styled.TouchableOpacity`
+  position: absolute;
+  bottom: 15%;
+  right: 0;
+  margin-right: 10px;
+  padding: 25px;
+  background-color: ${colors.info};
+  border-radius: 50px;
+`;

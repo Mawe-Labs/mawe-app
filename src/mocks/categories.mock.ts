@@ -16,61 +16,61 @@ export const categories = [
     name: 'Todos',
     products: [
       {
-        id: 1,
+        id: 2,
         image: banana,
         name: 'Banana',
         value: 20,
       },
       {
-        id: 2,
+        id: 3,
         image: limon,
         name: 'Limão',
         value: 20,
       },
       {
-        id: 3,
+        id: 4,
         image: corn,
         name: 'Milho',
         value: 20,
       },
       {
-        id: 4,
+        id: 5,
         image: meat,
         name: 'Carne',
         value: 20,
       },
       {
-        id: 5,
+        id: 6,
         image: sausage,
         name: 'Salsicha',
         value: 20,
       },
       {
-        id: 6,
+        id: 7,
         image: carrot,
         name: 'Cenoura',
         value: 20,
       },
       {
-        id: 7,
+        id: 8,
         image: detergent,
         name: 'Detergente',
         value: 20,
       },
       {
-        id: 8,
+        id: 9,
         image: coca,
         name: 'Coca',
         value: 20,
       },
       {
-        id: 9,
+        id: 10,
         image: popcorn,
         name: 'Pipoca',
         value: 20,
       },
       {
-        id: 10,
+        id: 11,
         image: gratedCheese,
         name: 'Queijo ralado',
         value: 20,
@@ -78,11 +78,11 @@ export const categories = [
     ],
   },
   {
-    id: 2,
+    id: 12,
     name: 'Bazar e Limpeza',
     products: [
       {
-        id: 11,
+        id: 13,
         image: detergent,
         name: 'Detergente',
         value: 20,
@@ -90,11 +90,11 @@ export const categories = [
     ],
   },
   {
-    id: 3,
+    id: 14,
     name: 'Bebidas',
     products: [
       {
-        id: 12,
+        id: 15,
         image: coca,
         name: 'Coca',
         value: 20,
@@ -102,17 +102,17 @@ export const categories = [
     ],
   },
   {
-    id: 4,
+    id: 16,
     name: 'Geladeira',
     products: [
       {
-        id: 13,
+        id: 17,
         image: meat,
         name: 'Carne',
         value: 20,
       },
       {
-        id: 14,
+        id: 18,
         image: sausage,
         name: 'Salsicha',
         value: 20,
@@ -124,25 +124,25 @@ export const categories = [
     name: 'Frutas, Vegetais e Legumes',
     products: [
       {
-        id: 15,
+        id: 19,
         image: banana,
         name: 'Banana',
         value: 20,
       },
       {
-        id: 16,
+        id: 20,
         image: limon,
         name: 'Limão',
         value: 20,
       },
       {
-        id: 17,
+        id: 21,
         image: carrot,
         name: 'Cenoura',
         value: 20,
       },
       {
-        id: 18,
+        id: 22,
         image: corn,
         name: 'Milho',
         value: 20,
@@ -150,27 +150,27 @@ export const categories = [
     ],
   },
   {
-    id: 6,
+    id: 23,
     name: 'Higiene pessoal',
     products: [],
   },
   {
-    id: 7,
+    id: 24,
     name: 'Importados',
     products: [],
   },
   {
-    id: 8,
+    id: 25,
     name: 'Mercearia',
     products: [
       {
-        id: 19,
+        id: 26,
         image: popcorn,
         name: 'Pipoca',
         value: 20,
       },
       {
-        id: 20,
+        id: 27,
         image: gratedCheese,
         name: 'Queijo ralado',
         value: 20,
@@ -178,11 +178,11 @@ export const categories = [
     ],
   },
   {
-    id: 9,
+    id: 28,
     name: 'Padaria',
     products: [
       {
-        id: 21,
+        id: 29,
         image: bread,
         name: 'Pão',
         value: 20,
@@ -190,7 +190,7 @@ export const categories = [
     ],
   },
   {
-    id: 10,
+    id: 30,
     name: 'Saúde e Beleza',
     products: [],
   },
