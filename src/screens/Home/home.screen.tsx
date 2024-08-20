@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {
   Button,
+  FlatList,
   ImageProps,
   ScrollView,
   Text,
@@ -27,52 +28,74 @@ interface CheckedState {
   [key: number]: boolean;
 }
 
+interface ProductProps {
+  id: number;
+  image: string;
+  name: string;
+  value: number;
+}
+
+interface ItemProps {
+  id: number;
+  name: string;
+  products: ProductProps[];
+}
+
+const renderCategories = (
+  item: ItemProps,
+  checked: CheckedState,
+  setChecked: (obj: CheckedState) => void,
+) => {
+  if (item.name !== 'Todos' && item.products.length > 0) {
+    return (
+      <>
+        <CategoriesContainer key={item.id}>
+          <Text style={{fontSize: 18}}>{item.name}</Text>
+        </CategoriesContainer>
+        <FlatList
+          data={item.products}
+          renderItem={({item}) => (
+            <ProductContainer key={item.id}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <ProductImage
+                  source={item.image as ImageProps}
+                  alt={item.name}
+                />
+                <View>
+                  <ProductText>{item.name}</ProductText>
+                  <ProductInformations>
+                    1 un - {numberFormat(item.value)}
+                  </ProductInformations>
+                </View>
+              </View>
+              <CheckBox
+                disabled={false}
+                value={checked[item.id]}
+                onValueChange={(newValue: boolean) => {
+                  setChecked({...checked, [item.id]: newValue});
+                }}
+              />
+            </ProductContainer>
+          )}
+        />
+      </>
+    );
+  } else {
+    return <></>;
+  }
+};
+
 export const Home = () => {
   const [checked, setChecked] = useState<CheckedState>({});
 
   return (
     <View style={{position: 'relative'}}>
-      <ScrollView>
-        {categories.map((category) => {
-          if (category.name !== 'Todos') {
-            if (category.products.length > 0) {
-              return (
-                <>
-                  <CategoriesContainer key={category.id}>
-                    <Text style={{fontSize: 18}}>{category.name}</Text>
-                  </CategoriesContainer>
-                  {category.products.map((product) => (
-                    <ProductContainer key={product.id}>
-                      <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <ProductImage
-                          source={product.image as ImageProps}
-                          alt={product.name}
-                        />
-                        <View>
-                          <ProductText>{product.name}</ProductText>
-                          <ProductInformations>
-                            1 un - {numberFormat(product.value)}
-                          </ProductInformations>
-                        </View>
-                      </View>
-                      <CheckBox
-                        disabled={false}
-                        value={checked[product.id]}
-                        onValueChange={(newValue: boolean) => {
-                          setChecked({...checked, [product.id]: newValue});
-                        }}
-                      />
-                    </ProductContainer>
-                  ))}
-                </>
-              );
-            }
-          }
-        })}
+      <FlatList
+        data={categories}
+        renderItem={({item}) => renderCategories(item, checked, setChecked)}
+      />
 
-        <Spacer size={160} />
-      </ScrollView>
+      <Spacer size={160} />
       <CircleAddedItem>
         <FontAwesomeIcon icon={faAdd} size={35} style={{color: '#fff'}} />
       </CircleAddedItem>
