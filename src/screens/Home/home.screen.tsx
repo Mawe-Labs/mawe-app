@@ -48,7 +48,7 @@ const renderCategories = (
 ) => {
   if (item.name !== 'Todos' && item.products.length > 0) {
     return (
-      <>
+      <View>
         <CategoriesContainer key={item.id}>
           <Text style={{fontSize: 18}}>{item.name}</Text>
         </CategoriesContainer>
@@ -78,7 +78,7 @@ const renderCategories = (
             </ProductContainer>
           )}
         />
-      </>
+      </View>
     );
   } else {
     return <></>;
@@ -89,16 +89,18 @@ export const Home = () => {
   const [checked, setChecked] = useState<CheckedState>({});
 
   return (
-    <View style={{position: 'relative'}}>
-      <FlatList
-        data={categories}
-        renderItem={({item}) => renderCategories(item, checked, setChecked)}
-      />
+    <View>
+      <View style={{marginBottom: '30%'}}>
+        <FlatList
+          data={categories}
+          renderItem={({item}) => renderCategories(item, checked, setChecked)}
+        />
+      </View>
 
-      <Spacer size={160} />
       <CircleAddedItem>
         <FontAwesomeIcon icon={faAdd} size={35} style={{color: '#fff'}} />
       </CircleAddedItem>
+
       <ListInformations />
     </View>
   );
