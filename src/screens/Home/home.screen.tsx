@@ -1,24 +1,111 @@
-import React from 'react';
-import { SafeAreaView, Text, StyleSheet } from 'react-native';
-import Header from '../../components/Header/header.component';
+import React, {useState} from 'react';
+import {
+  Button,
+  FlatList,
+  ImageProps,
+  ScrollView,
+  Text,
+  Touchable,
+  View,
+} from 'react-native';
+import {
+  CategoriesContainer,
+  CircleAddedItem,
+  ProductContainer,
+  ProductImage,
+  ProductInformations,
+  ProductText,
+} from './home.styles';
+import {categories} from '../../mocks/categories.mock';
+import numberFormat from '../../utils/number-format.util';
+import CheckBox from '@react-native-community/checkbox';
+import ListInformations from '../../components/ListInformations/list-informations.component';
+import {Spacer} from '../../components/global.component';
+import {faAdd} from '@fortawesome/free-solid-svg-icons/faAdd';
+import Header from '../../components/Header/header.component'
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
-const asas: React.FC = () => {
+interface CheckedState {
+  [key: number]: boolean;
+}
+
+interface ProductProps {
+  id: number;
+  image: string;
+  name: string;
+  value: number;
+}
+
+interface ItemProps {
+  id: number;
+  name: string;
+  products: ProductProps[];
+}
+
+const renderCategories = (
+  item: ItemProps,
+  checked: CheckedState,
+  setChecked: (obj: CheckedState) => void,
+) => {
+  if (item.name !== 'Todos' && item.products.length > 0) {
     return (
-        <SafeAreaView style={styles.container}>
-            <Header title="Home Page" />
-            <Text style={styles.text}>Hello, home!</Text>
-        </SafeAreaView>
+      <View>
+        <CategoriesContainer key={item.id}>
+          <Text style={{fontSize: 18}}>{item.name}</Text>
+        </CategoriesContainer>
+        <FlatList
+          data={item.products}
+          renderItem={({item}) => (
+            <ProductContainer key={item.id}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <ProductImage
+                  source={item.image as ImageProps}
+                  alt={item.name}
+                />
+                <View>
+                  <ProductText>{item.name}</ProductText>
+                  <ProductInformations>
+                    1 un - {numberFormat(item.value)}
+                  </ProductInformations>
+                </View>
+              </View>
+              <CheckBox
+                disabled={false}
+                value={checked[item.id]}
+                onValueChange={(newValue: boolean) => {
+                  setChecked({...checked, [item.id]: newValue});
+                }}
+              />
+            </ProductContainer>
+          )}
+        />
+      </View>
     );
+  } else {
+    return <></>;
+  }
 };
 
-const styles = StyleSheet.create({
-    container: {
-    },
-    text: {
-        fontSize: 50,
-        textAlign: 'center',
-        marginTop: 20,
-    },
-});
+export const Home = () => {
+  const [checked, setChecked] = useState<CheckedState>({});
 
-export default asas;
+  return (
+    <View>
+        <Header title={'Minha Lista'} />
+      <View style={{marginBottom: '30%'}}>
+        <FlatList
+          data={categories}
+          renderItem={({item}) => renderCategories(item, checked, setChecked)}
+        />
+      </View>
+
+      <CircleAddedItem>
+        <FontAwesomeIcon icon={faAdd} size={35} style={{color: '#fff'}} />
+      </CircleAddedItem>
+
+      <ListInformations />
+    </View>
+  );
+};
+
+export default Home;
