@@ -22,6 +22,7 @@ import CheckBox from '@react-native-community/checkbox';
 import ListInformations from '../../components/ListInformations/list-informations.component';
 import {Spacer} from '../../components/global.component';
 import {faAdd} from '@fortawesome/free-solid-svg-icons/faAdd';
+import Header from '../../components/Header/header.component'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 interface CheckedState {
@@ -90,6 +91,7 @@ export const Home = () => {
 
   return (
     <View>
+        <Header title={'Minha Lista'} />
       <View style={{marginBottom: '30%'}}>
         <FlatList
           data={categories}
