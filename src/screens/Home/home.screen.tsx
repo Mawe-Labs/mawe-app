@@ -61,7 +61,7 @@ const renderCategories = (
                   alt={item.name}
                 />
                 <View>
-                  <ProductText>{item.name}</ProductText>
+                  <ProductText strike={checked[item.id]}>{item.name}</ProductText>
                   <ProductInformations>
                     1 un - {numberFormat(item.value)}
                   </ProductInformations>
