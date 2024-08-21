@@ -1,8 +1,24 @@
-import React from "react";
-import { Text } from "react-native";
+import React from 'react';
+import { SafeAreaView, Text, StyleSheet } from 'react-native';
+import Header from '../../components/Header/header.component';
 
-export const Home = () => {
-    return <Text style={{fontSize: 50}}>Hello, home!</Text>
+const asas: React.FC = () => {
+    return (
+        <SafeAreaView style={styles.container}>
+            <Header title="Home Page" />
+            <Text style={styles.text}>Hello, home!</Text>
+        </SafeAreaView>
+    );
 };
 
-export default Home;
+const styles = StyleSheet.create({
+    container: {
+    },
+    text: {
+        fontSize: 50,
+        textAlign: 'center',
+        marginTop: 20,
+    },
+});
+
+export default asas;

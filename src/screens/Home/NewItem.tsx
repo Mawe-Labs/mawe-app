@@ -1,244 +1,282 @@
-import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
-import {Picker} from '@react-native-picker/picker';
-import {TextInputMask} from 'react-native-masked-text';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import React, { useState } from 'react';
+import { View, Text, TextInput, StyleSheet, Image, ScrollView, FlatList, TouchableOpacity, Modal, TouchableHighlight } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
+import Header from '../../components/Header/header.component';
 
-const NovoItemScreen: React.FC = () => {
-  const [selectedUnit, setSelectedUnit] = useState('un');
+const unitOptions = Array.from({ length: 9 }, (_, i) => i + 1);
+const categoryOptions = ['All', 'Frutas', 'Geladeira', 'Bebidas', 'Outros'];
+
+const formatPrice = (value: string) => {
+  const cleanedValue = value.replace(/[^0-9]/g, '');
+  let formattedValue = cleanedValue;
+  if (cleanedValue.length > 2) {
+    formattedValue = cleanedValue.slice(0, -2) + ',' + cleanedValue.slice(-2);
+  } else {
+    formattedValue = '0,' + cleanedValue.padStart(2, '0');
+  }
+  return formattedValue;
+};
+
+const NewItemScreen: React.FC = () => {
+  const [isCheckedCart, setIsCheckedCart] = useState(false);
+  const [selectedUnit, setSelectedUnit] = useState('2');
+  const [showUnits, setShowUnits] = useState(false);
   const [price, setPrice] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [isChecked, setIsChecked] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('Frutas');
+  const [showCategories, setShowCategories] = useState(false);
+
+  const handleUnitSelect = (unit: string) => {
+    setSelectedUnit(unit);
+    setShowUnits(false);
+  };
+
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category);
+    setShowCategories(false);
+  };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.headerButton}>
-          <Icon name="arrow-left" size={20} color="#ffffff" />
-          <Text style={styles.headerButtonText} />
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Novo Item</Text>
-        <TouchableOpacity style={styles.headerButton}>
-          <Icon name="arrow-right" size={20} color="#ffffff" />
-          <Text style={styles.headerButtonText} />
-        </TouchableOpacity>
-      </View>
-      <ScrollView contentContainerStyle={styles.content}>
-        <View style={styles.inputGroup}>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Header title="NOVO ITEM" />
+      <View style={styles.form}>
+        <View style={styles.inputContainer}>
           <Text style={styles.label}>Nome</Text>
           <TextInput style={styles.input} />
         </View>
-
-        <View style={styles.row}>
-          <View style={styles.inputContainer}>
+        <View style={styles.quantityContainer}>
+          <View style={styles.quantitySection}>
             <Text style={styles.label}>Quantidade</Text>
             <TextInput style={styles.input} keyboardType="numeric" />
           </View>
-          <View style={styles.inputContainer}>
+          <View style={styles.unitSection}>
             <Text style={styles.label}>Unidade</Text>
-            <Picker
-              selectedValue={selectedUnit}
-              style={styles.picker}
-              onValueChange={itemValue => setSelectedUnit(itemValue)}>
-              <Picker.Item label="un" value="un" />
-              <Picker.Item label="2" value="2" />
-              <Picker.Item label="3" value="3" />
-              <Picker.Item label="4" value="4" />
-              <Picker.Item label="5" value="5" />
-              <Picker.Item label="6" value="6" />
-            </Picker>
+            <TouchableOpacity onPress={() => setShowUnits(true)}>
+              <Text style={styles.selectedUnit}>{selectedUnit}</Text>
+            </TouchableOpacity>
+            <Modal
+              visible={showUnits}
+              transparent={true}
+              animationType="slide"
+              onRequestClose={() => setShowUnits(false)}
+            >
+              <View style={styles.modalContainer}>
+                <View style={styles.modalContent}>
+                  <FlatList
+                    data={unitOptions.map(num => ({ key: num.toString() }))}
+                    keyExtractor={(item) => item.key}
+                    renderItem={({ item }) => (
+                      <TouchableOpacity 
+                        style={styles.option}
+                        onPress={() => handleUnitSelect(item.key)}
+                      >
+                        <Text style={styles.optionText}>{item.key}</Text>
+                      </TouchableOpacity>
+                    )}
+                  />
+                  <TouchableHighlight
+                    style={styles.modalCloseButton}
+                    onPress={() => setShowUnits(false)}
+                  >
+                    <Text style={styles.modalCloseButtonText}>Fechar</Text>
+                  </TouchableHighlight>
+                </View>
+              </View>
+            </Modal>
           </View>
         </View>
-
-        <View style={styles.row}>
-          <View style={styles.priceContainer}>
+        <View style={styles.priceContainer}>
+          <View style={styles.priceSection}>
             <Text style={styles.label}>Preço</Text>
-            <View style={styles.priceInputContainer}>
-              <TextInputMask
-                type={'money'}
-                options={{
-                  precision: 2,
-                  separator: ',',
-                  delimiter: '.',
-                  unit: '',
-                  suffixUnit: '',
-                }}
-                value={price}
-                onChangeText={text => setPrice(text)}
-                style={styles.priceInput}
-              />
-            </View>
+            <TextInput
+              style={styles.input2}
+              keyboardType="numeric"
+              value={price}
+              onChangeText={(text) => setPrice(formatPrice(text))}
+              placeholder="00,00" 
+            />
           </View>
           <View style={styles.cartContainer}>
-            <Text style={styles.label}>Inserir no carrinho</Text>
-            <View style={styles.checkboxContainer}>
-              <CheckBox
-                value={isChecked}
-                onValueChange={setIsChecked}
-                style={styles.checkbox}
+            <Text style={styles.label}>Inserir no Carrinho</Text>
+            <View style={styles.cartCheckboxContainer}>
+              <Image 
+                source={{ uri: 'https://i.pinimg.com/564x/59/e5/53/59e5531ab44ffbedbc0f40ecf97d5385.jpg' }} 
+                style={styles.image2} 
               />
-              <Image
-                source={{
-                  uri: 'https://w7.pngwing.com/pngs/833/426/png-transparent-shopping-cart-icon-shopping-cart-black-design-trade.png',
-                }}
-                style={styles.checkboxImage}
+              <CheckBox
+                value={isCheckedCart}
+                onValueChange={setIsCheckedCart}
+                boxType='square'
+                style={styles.checkbox}
               />
             </View>
           </View>
         </View>
-
-        <View style={styles.inputGroup}>
+        <View style={styles.categoryContainer}>
           <Text style={styles.label}>Categoria</Text>
-          <Picker
-            selectedValue={selectedCategory}
-            style={styles.picker}
-            onValueChange={itemValue => setSelectedCategory(itemValue)}>
-            <Picker.Item label="All" value="All" />
-            <Picker.Item label="Bazar" value="Bazar e Limpeza" />
-            <Picker.Item label="Bebidas" value="Bebidas" />
-            <Picker.Item label="refeições prontas" value="Refeições Prontas" />
-            <Picker.Item label="geladeira" value="Geladeira" />
-            <Picker.Item label="frutas, vegetais" value="Frutas, Vegetais" />
-            <Picker.Item label="higiene pessoal" value="Higiene Pessoal" />
-            <Picker.Item label="importados" value="Importados" />
-            <Picker.Item label="mercearia" value="Mercearia" />
-            <Picker.Item label="padaria" value="Padaria" />
-            <Picker.Item label="saúde e beleza" value="Saúde e Beleza" />
-          </Picker>
+          <TouchableOpacity onPress={() => setShowCategories(!showCategories)}>
+            <Text style={styles.selectedCategory}>{selectedCategory}</Text>
+          </TouchableOpacity>
+          {showCategories && (
+            <FlatList
+              data={categoryOptions.map(category => ({ key: category }))}
+              keyExtractor={(item) => item.key}
+              renderItem={({ item }) => (
+                <TouchableOpacity 
+                  style={styles.option}
+                  onPress={() => handleCategorySelect(item.key)}
+                >
+                  <Text style={styles.optionText}>{item.key}</Text>
+                </TouchableOpacity>
+              )}
+            />
+          )}
         </View>
-
-        <View style={styles.inputGroup}>
+        <View style={styles.inputContainer}>
           <Text style={styles.label}>Observação</Text>
-          <TextInput style={styles.input} placeholder="Observação" />
-        </View>
-
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Foto</Text>
-          <Image
-            source={{
-              uri: 'https://media.istockphoto.com/id/485582959/pt/vetorial/rolo-de-m%C3%A3o-sushi-salm%C3%A3o.jpg?s=612x612&w=0&k=20&c=ly0eryHoTx7qS-UH_JeZ13JYu6G1eMvwEbVMAKRh1TQ=',
-            }}
-            style={styles.image}
+          <TextInput 
+            style={[styles.input, styles.textArea]} 
+            multiline 
+            numberOfLines={4}
           />
         </View>
-      </ScrollView>
-    </View>
+        <Text style={styles.label}>Foto</Text>
+        <View style={styles.imageContainer}>
+          <Image 
+            source={{ uri: 'https://media.istockphoto.com/id/485582959/pt/vetorial/rolo-de-m%C3%A3o-sushi-salm%C3%A3o.jpg?s=612x612&w=0&k=20&c=ly0eryHoTx7qS-UH_JeZ13JYu6G1eMvwEbVMAKRh1TQ=' }} 
+            style={styles.image} 
+          />
+        </View>
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#ffffff',
+    flexGrow: 1,
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#00ba00',
-    padding: 20,
-  },
-  headerText: {
-    color: '#ffffff',
-    fontSize: 25,
-    fontWeight: 'bold',
-  },
-  headerButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
-  },
-  headerButtonText: {
-    color: '#ffffff',
-    fontSize: 20,
-    marginLeft: 5,
-  },
-  content: {
-    padding: 20,
-  },
-  label: {
-    paddingVertical: 5,
-    fontSize: 18,
-    marginBottom: 15,
-  },
-  input: {
-    color: '#000000',
-    backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderColor: '#000000',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    height: 40,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 25,
+  form: {
+    padding: 15,
   },
   inputContainer: {
-    flex: 1,
-    marginHorizontal: 5,
+    marginBottom: 30,
   },
-  inputGroup: {
-    marginBottom: 35,
-  },
-  priceContainer: {
-    flex: 1,
-    marginHorizontal: 5,
-  },
-  priceInputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-  },
-  priceInput: {
-    backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderColor: '#000000',
-    paddingHorizontal: 10,
-    paddingVertical: 12,
+  input: {
     height: 40,
-    flex: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    marginBottom: 10,
+    paddingHorizontal: 10,
   },
-  cartContainer: {
-    flex: 1,
-    marginHorizontal: 5,
+  input2: {
+    height: 40,
+    width: 190,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    marginBottom: 10,
+    paddingHorizontal: 10,
   },
-  checkboxContainer: {
+  textArea: {
+    height: 80,
+    textAlignVertical: 'top',
+  },
+  quantityContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 15,
   },
-  checkbox: {
+  quantitySection: {
+    flex: 1,
     marginRight: 10,
   },
-  checkboxImage: {
-    width: 40,
-    height: 40,
+  unitSection: {
+    flex: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd', 
+    marginBottom: 10,
+  },
+  selectedUnit: {
+    marginTop:8,
+    fontSize: 16,
+    color: '#000',
+  },
+  selectedCategory: {
+    fontSize: 20,
+    color: '#000',
+    backgroundColor: '#ffffff',
+  },
+  option: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  optionText: {
+    fontSize: 16,
+    color: '#333',
+  },
+  priceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  priceSection: {
+    flex: 1,
+    marginRight: 10,
+  },
+  image2: {
+    width: 35,
+    height: 35,
+  },
+  cartContainer: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+  },
+  cartCheckboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  label: {
+    fontSize: 16,
+    color: '#333',
+    marginBottom: 5,
+  },
+  checkbox: {
     marginLeft: 10,
   },
+  imageContainer: {},
   image: {
-    marginTop: 10,
     width: 150,
     height: 150,
-    resizeMode: 'cover',
-    backgroundColor: '#D3D3D3',
+    borderRadius: 5,
   },
-  picker: {
-    height: 40,
-    width: '100%',
-    backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderColor: '#ffffff',
+  categoryContainer: {
+    marginBottom: 30,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    width: '80%',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+  },
+  modalCloseButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#00ba00',
+    borderRadius: 5,
+  },
+  modalCloseButtonText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
 
-export default NovoItemScreen;
+export default NewItemScreen;
