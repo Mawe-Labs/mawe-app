@@ -1,10 +1,5 @@
 import React, {useState} from 'react';
-import {
-  FlatList,
-  ImageProps,
-  Text,
-  View,
-} from 'react-native';
+import {FlatList, ImageProps, Text, View} from 'react-native';
 import {
   CategoriesContainer,
   CircleAddedItem,
@@ -38,10 +33,17 @@ interface ItemProps {
   products: ProductProps[];
 }
 
+interface CartProps {
+  id: number;
+  name: string;
+}
+
 const renderCategories = (
   item: ItemProps,
   checked: CheckedState,
+  cart: CartProps[],
   setChecked: (obj: CheckedState) => void,
+  setCart: (newItem: any) => void,
 ) => {
   if (item.name !== 'Todos' && item.products.length > 0) {
     return (
@@ -70,6 +72,16 @@ const renderCategories = (
                 value={checked[item.id]}
                 onValueChange={(newValue: boolean) => {
                   setChecked({...checked, [item.id]: newValue});
+
+                  if (!checked[item.id]) {
+                    setCart((prevState: any) => [
+                      ...prevState,
+                      {id: item.id, name: item.name},
+                    ]);
+                  } else {
+                    const newCart = cart.filter((cart) => cart.id !== item.id);
+                    setCart(newCart);
+                  }
                 }}
               />
             </ProductContainer>
@@ -84,14 +96,18 @@ const renderCategories = (
 
 export const Home = () => {
   const [checked, setChecked] = useState<CheckedState>({});
+  const [cart, setCart] = useState<CartProps[]>([]);
 
   return (
     <View>
       <Header title={'Minha Lista'} />
+
       <View style={{marginBottom: '70%'}}>
         <FlatList
           data={categories}
-          renderItem={({item}) => renderCategories(item, checked, setChecked)}
+          renderItem={({item}) =>
+            renderCategories(item, checked, cart, setChecked, setCart)
+          }
         />
       </View>
 
@@ -99,7 +115,7 @@ export const Home = () => {
         <FontAwesomeIcon icon={faAdd} size={35} style={{color: '#fff'}} />
       </CircleAddedItem>
 
-      <ListInformations />
+      <ListInformations quantityCart={cart?.length} />
     </View>
   );
 };
