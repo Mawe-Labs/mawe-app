@@ -1,11 +1,8 @@
 import React, {useState} from 'react';
 import {
-  Button,
   FlatList,
   ImageProps,
-  ScrollView,
   Text,
-  Touchable,
   View,
 } from 'react-native';
 import {
@@ -20,9 +17,8 @@ import {categories} from '../../mocks/categories.mock';
 import numberFormat from '../../utils/number-format.util';
 import CheckBox from '@react-native-community/checkbox';
 import ListInformations from '../../components/ListInformations/list-informations.component';
-import {Spacer} from '../../components/global.component';
 import {faAdd} from '@fortawesome/free-solid-svg-icons/faAdd';
-import Header from '../../components/Header/header.component'
+import Header from '../../components/Header/header.component';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 interface CheckedState {
@@ -91,8 +87,8 @@ export const Home = () => {
 
   return (
     <View>
-        <Header title={'Minha Lista'} />
-      <View style={{marginBottom: '30%'}}>
+      <Header title={'Minha Lista'} />
+      <View style={{marginBottom: '70%'}}>
         <FlatList
           data={categories}
           renderItem={({item}) => renderCategories(item, checked, setChecked)}

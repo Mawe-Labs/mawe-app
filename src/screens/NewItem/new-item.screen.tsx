@@ -1,8 +1,17 @@
 import React, { useState, useMemo } from 'react';
-import { View, Text, TextInput, StyleSheet, Image, ScrollView, FlatList, TouchableOpacity, Modal, TouchableWithoutFeedback } from 'react-native';
+import { 
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  FlatList,
+  TouchableOpacity,
+  Image,
+  } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Header from '../../components/Header/header.component';
 import { categories } from '../../mocks/categories.mock';
+import { styles } from './new-item.styles';
 
 const NewItemScreen: React.FC = () => {
   const [isCheckedCart, setIsCheckedCart] = useState(false);
@@ -11,8 +20,9 @@ const NewItemScreen: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [showCategories, setShowCategories] = useState(false);
   const [searchText, setSearchText] = useState('');
-  const [selectedProduct, setSelectedProduct] = useState<number | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [observations, setObservations] = useState('');
 
   const formatPrice = (value: string) => {
     const cleanedValue = value.replace(/[^0-9]/g, '');
@@ -31,19 +41,15 @@ const NewItemScreen: React.FC = () => {
     );
   }, [searchText, selectedCategory]);
 
-  const productImage = useMemo(() => {
-    if (!searchText.trim()) return null;
-    const product = filteredProducts.find(p => p.name.toLowerCase() === searchText.toLowerCase());
-    return product ? product.image : null;
-  }, [filteredProducts, searchText]);
-
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
     setShowCategories(false);
   };
 
-  const handleProductSelect = (productImage: any) => {
-    setSelectedProduct(productImage);
+  const handleProductSelect = (product: any) => {
+    setSelectedProduct(product);
+    setSearchText(''); 
+    setShowCategories(false); 
     setIsModalVisible(true);
   };
 
@@ -73,10 +79,10 @@ const NewItemScreen: React.FC = () => {
               keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
                 <TouchableOpacity
-                  onPress={() => handleProductSelect(item.image)}
+                  onPress={() => handleProductSelect(item)}
                   style={[
                     styles.productItem,
-                    selectedProduct === item.image && styles.selectedProductItem,
+                    selectedProduct?.id === item.id && styles.selectedProductItem,
                   ]}
                 >
                   <Image source={item.image} style={styles.productImage} />
@@ -154,169 +160,27 @@ const NewItemScreen: React.FC = () => {
           )}
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Observação</Text>
+          <Text style={styles.label}>Observações</Text>
           <TextInput 
-            style={[styles.input, styles.textArea]} 
-            placeholder="Digite uma observação"
+            style={styles.input} 
+            placeholder="Observações" 
+            value={observations}
+            onChangeText={setObservations}
           />
         </View>
-        {searchText.trim() && productImage && (
-          <>
-            <Text style={styles.label}>Foto</Text>
-            <Image 
-              source={productImage} 
-              style={styles.image} 
-              resizeMode="cover"
-            />
-          </>
+        {selectedProduct && (
+          <Image 
+            source={selectedProduct.image} 
+            style={{ width: 200, height: 200, marginTop: 10 }} 
+            resizeMode="contain"
+          />
         )}
         <TouchableOpacity style={styles.addButton} onPress={handleAddToCart}>
-          <Text style={styles.addButtonText}>Adicionar Item no Carrinho</Text>
+          <Text style={styles.addButtonText}>Adicionar ao Carrinho</Text>
         </TouchableOpacity>
       </View>
-      <Modal
-        visible={isModalVisible}
-        transparent={true}
-        animationType="slide"
-        onRequestClose={() => setIsModalVisible(false)}
-      >
-        <TouchableWithoutFeedback onPress={() => setIsModalVisible(false)}>
-          <View style={styles.modalContainer}>
-            <Image source={selectedProduct || { uri: '' }} style={styles.modalImage} resizeMode="contain" />
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#ffffff',
-    flexGrow: 1,
-  },
-  form: {
-    padding: 15,
-  },
-  inputContainer: {
-    marginBottom: 20,
-  },
-  input: {
-    height: 40,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-    paddingHorizontal: 10,
-    flex: 1,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-  },
-  quantityContainer: {
-    flex: 1,
-    marginRight: 10,
-  },
-  unitContainer: {
-    flex: 1,
-  },
-  textArea: {
-    height: 30,
-    paddingTop: 5,
-  },
-  selectedCategory: {
-    fontSize: 20,
-    color: '#000',
-    backgroundColor: '#ffffff',
-    padding: 10, 
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  option: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  optionText: {
-    fontSize: 16,
-    color: '#333',
-  },
-  image2: {
-    width: 35,
-    height: 35,
-  },
-  cartContainer: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-  },
-  cartCheckboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  label: {
-    fontSize: 16,
-    color: '#333',
-    marginBottom: 5,
-  },
-  checkbox: {
-    marginLeft: 10,
-  },
-  categoryContainer: {
-    marginBottom: 30,
-  },
-  addButton: {
-    backgroundColor: '#12824f',
-    padding: 15,
-    borderRadius: 5,
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  addButtonText: {
-    color: '#ffffff',
-    fontSize: 16,
-  },
-  image: {
-    width: '100%',
-    height: 200,
-    marginBottom: 20,
-  },
-  productListContainer: {
-    marginBottom: 20,
-  },
-  productItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  productName: {
-    fontSize: 16,
-    flex: 1,
-  },
-  productPrice: {
-    fontSize: 16,
-    color: '#00ba00',
-  },
-  selectedProductItem: {
-    backgroundColor: '#e0e0e0',
-  },
-  productImage: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-  },
-  modalImage: {
-    width: '90%',
-    height: '80%',
-  },
-});
 
 export default NewItemScreen;

@@ -35,7 +35,7 @@ export const ProductInformations = styled.Text`
 
 export const CircleAddedItem = styled.TouchableOpacity`
   position: absolute;
-  bottom: 15%;
+  bottom: 28%;
   right: 0;
   margin-right: 10px;
   padding: 25px;

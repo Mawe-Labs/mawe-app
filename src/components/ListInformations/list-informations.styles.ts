@@ -5,7 +5,7 @@ const {colors} = themes;
 
 export const Container = styled.View`
   position: absolute;
-  bottom: 0;
+  bottom: 14%;
   left: 0;
   right: 0;
   padding: 15px;
