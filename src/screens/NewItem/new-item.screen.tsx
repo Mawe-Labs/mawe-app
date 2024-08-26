@@ -1,114 +1,142 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Image, ScrollView, FlatList, TouchableOpacity, Modal, TouchableHighlight } from 'react-native';
+import React, { useState, useMemo } from 'react';
+import { 
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  FlatList,
+  TouchableOpacity,
+  Image,
+  } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Header from '../../components/Header/header.component';
-
-const unitOptions = Array.from({ length: 9 }, (_, i) => i + 1);
-const categoryOptions = ['All', 'Frutas', 'Geladeira', 'Bebidas', 'Outros'];
-
-const formatPrice = (value: string) => {
-  const cleanedValue = value.replace(/[^0-9]/g, '');
-  let formattedValue = cleanedValue;
-  if (cleanedValue.length > 2) {
-    formattedValue = cleanedValue.slice(0, -2) + ',' + cleanedValue.slice(-2);
-  } else {
-    formattedValue = '0,' + cleanedValue.padStart(2, '0');
-  }
-  return formattedValue;
-};
+import { categories } from '../../mocks/categories.mock';
+import { styles } from './new-item.styles';
 
 const NewItemScreen: React.FC = () => {
   const [isCheckedCart, setIsCheckedCart] = useState(false);
-  const [selectedUnit, setSelectedUnit] = useState('2');
-  const [showUnits, setShowUnits] = useState(false);
+  const [selectedUnit, setSelectedUnit] = useState('');
   const [price, setPrice] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('Frutas');
+  const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [showCategories, setShowCategories] = useState(false);
+  const [searchText, setSearchText] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [observations, setObservations] = useState('');
 
-  const handleUnitSelect = (unit: string) => {
-    setSelectedUnit(unit);
-    setShowUnits(false);
+  const formatPrice = (value: string) => {
+    const cleanedValue = value.replace(/[^0-9]/g, '');
+    const numericValue = parseInt(cleanedValue, 10) || 0;
+    const formattedValue = (numericValue / 100).toFixed(2).replace('.', ',');
+
+    return formattedValue;
   };
+
+  const filteredProducts = useMemo(() => {
+    const category = categories.find(cat => cat.name === selectedCategory);
+    if (!category) return [];
+
+    return category.products.filter(product =>
+      product.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+  }, [searchText, selectedCategory]);
 
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
     setShowCategories(false);
   };
 
+  const handleProductSelect = (product: any) => {
+    setSelectedProduct(product);
+    setSearchText(''); 
+    setShowCategories(false); 
+    setIsModalVisible(true);
+  };
+
+  const handleAddToCart = () => {
+    console.log('Item adicionado ao carrinho');
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Header title="NOVO ITEM" />
+      <Header title={'Novo Item'} />
       <View style={styles.form}>
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Nome</Text>
-          <TextInput style={styles.input} />
+          <TextInput 
+            style={styles.input} 
+            placeholder="Digite o nome do item" 
+            value={searchText}
+            onChangeText={setSearchText}
+          />
         </View>
-        <View style={styles.quantityContainer}>
-          <View style={styles.quantitySection}>
-            <Text style={styles.label}>Quantidade</Text>
-            <TextInput style={styles.input} keyboardType="numeric" />
-          </View>
-          <View style={styles.unitSection}>
-            <Text style={styles.label}>Unidade</Text>
-            <TouchableOpacity onPress={() => setShowUnits(true)}>
-              <Text style={styles.selectedUnit}>{selectedUnit}</Text>
-            </TouchableOpacity>
-            <Modal
-              visible={showUnits}
-              transparent={true}
-              animationType="slide"
-              onRequestClose={() => setShowUnits(false)}
-            >
-              <View style={styles.modalContainer}>
-                <View style={styles.modalContent}>
-                  <FlatList
-                    data={unitOptions.map(num => ({ key: num.toString() }))}
-                    keyExtractor={(item) => item.key}
-                    renderItem={({ item }) => (
-                      <TouchableOpacity 
-                        style={styles.option}
-                        onPress={() => handleUnitSelect(item.key)}
-                      >
-                        <Text style={styles.optionText}>{item.key}</Text>
-                      </TouchableOpacity>
-                    )}
-                  />
-                  <TouchableHighlight
-                    style={styles.modalCloseButton}
-                    onPress={() => setShowUnits(false)}
-                  >
-                    <Text style={styles.modalCloseButtonText}>Fechar</Text>
-                  </TouchableHighlight>
-                </View>
-              </View>
-            </Modal>
-          </View>
-        </View>
-        <View style={styles.priceContainer}>
-          <View style={styles.priceSection}>
-            <Text style={styles.label}>Preço</Text>
-            <TextInput
-              style={styles.input2}
-              keyboardType="numeric"
-              value={price}
-              onChangeText={(text) => setPrice(formatPrice(text))}
-              placeholder="00,00" 
+       
+        {searchText.trim() && (
+          <View style={styles.productListContainer}>
+            <Text style={styles.label}>Produtos Encontrados</Text>
+            <FlatList
+              data={filteredProducts}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  onPress={() => handleProductSelect(item)}
+                  style={[
+                    styles.productItem,
+                    selectedProduct?.id === item.id && styles.selectedProductItem,
+                  ]}
+                >
+                  <Image source={item.image} style={styles.productImage} />
+                  <Text style={styles.productName}>{item.name}</Text>
+                  <Text style={styles.productPrice}>{item.value} R$</Text>
+                </TouchableOpacity>
+              )}
             />
           </View>
-          <View style={styles.cartContainer}>
-            <Text style={styles.label}>Inserir no Carrinho</Text>
-            <View style={styles.cartCheckboxContainer}>
-              <Image 
-                source={{ uri: 'https://i.pinimg.com/564x/59/e5/53/59e5531ab44ffbedbc0f40ecf97d5385.jpg' }} 
-                style={styles.image2} 
-              />
-              <CheckBox
-                value={isCheckedCart}
-                onValueChange={setIsCheckedCart}
-                boxType='square'
-                style={styles.checkbox}
-              />
-            </View>
+        )}
+        <View style={styles.row}>
+          <View style={styles.quantityContainer}>
+            <Text style={styles.label}>Quantidade</Text>
+            <TextInput 
+              style={styles.input} 
+              keyboardType="numeric" 
+              placeholder="Digite a quantidade" 
+            />
+          </View>
+          <View style={styles.unitContainer}>
+            <Text style={styles.label}>Unidade</Text>
+            <TextInput
+              style={styles.input}
+              keyboardType="numeric"
+              value={selectedUnit}
+              onChangeText={setSelectedUnit}
+              placeholder="Digite a unidade"
+            />
+          </View>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Preço</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            value={price}
+            onChangeText={(text) => setPrice(formatPrice(text))}
+            placeholder="00,00" 
+          />
+        </View>
+        <View style={styles.cartContainer}>
+          <Text style={styles.label}>Inserir no Carrinho</Text>
+          <View style={styles.cartCheckboxContainer}>
+            <Image 
+              source={{ uri: 'https://i.pinimg.com/564x/59/e5/53/59e5531ab44ffbedbc0f40ecf97d5385.jpg' }} 
+              style={styles.image2} 
+              resizeMode="cover"
+            />
+            <CheckBox
+              value={isCheckedCart}
+              onValueChange={setIsCheckedCart}
+              boxType='square'
+              style={styles.checkbox}
+            />
           </View>
         </View>
         <View style={styles.categoryContainer}>
@@ -118,7 +146,7 @@ const NewItemScreen: React.FC = () => {
           </TouchableOpacity>
           {showCategories && (
             <FlatList
-              data={categoryOptions.map(category => ({ key: category }))}
+              data={categories.map(category => ({ key: category.name }))}
               keyExtractor={(item) => item.key}
               renderItem={({ item }) => (
                 <TouchableOpacity 
@@ -132,151 +160,27 @@ const NewItemScreen: React.FC = () => {
           )}
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Observação</Text>
+          <Text style={styles.label}>Observações</Text>
           <TextInput 
-            style={[styles.input, styles.textArea]} 
-            multiline 
-            numberOfLines={4}
+            style={styles.input} 
+            placeholder="Observações" 
+            value={observations}
+            onChangeText={setObservations}
           />
         </View>
-        <Text style={styles.label}>Foto</Text>
-        <View style={styles.imageContainer}>
+        {selectedProduct && (
           <Image 
-            source={{ uri: 'https://media.istockphoto.com/id/485582959/pt/vetorial/rolo-de-m%C3%A3o-sushi-salm%C3%A3o.jpg?s=612x612&w=0&k=20&c=ly0eryHoTx7qS-UH_JeZ13JYu6G1eMvwEbVMAKRh1TQ=' }} 
-            style={styles.image} 
+            source={selectedProduct.image} 
+            style={{ width: 200, height: 200, marginTop: 10 }} 
+            resizeMode="contain"
           />
-        </View>
+        )}
+        <TouchableOpacity style={styles.addButton} onPress={handleAddToCart}>
+          <Text style={styles.addButtonText}>Adicionar ao Carrinho</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#ffffff',
-    flexGrow: 1,
-  },
-  form: {
-    padding: 15,
-  },
-  inputContainer: {
-    marginBottom: 30,
-  },
-  input: {
-    height: 40,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-  input2: {
-    height: 40,
-    width: 190,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-  textArea: {
-    height: 80,
-    textAlignVertical: 'top',
-  },
-  quantityContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 15,
-  },
-  quantitySection: {
-    flex: 1,
-    marginRight: 10,
-  },
-  unitSection: {
-    flex: 1,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd', 
-    marginBottom: 10,
-  },
-  selectedUnit: {
-    marginTop:8,
-    fontSize: 16,
-    color: '#000',
-  },
-  selectedCategory: {
-    fontSize: 20,
-    color: '#000',
-    backgroundColor: '#ffffff',
-  },
-  option: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  optionText: {
-    fontSize: 16,
-    color: '#333',
-  },
-  priceContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 30,
-  },
-  priceSection: {
-    flex: 1,
-    marginRight: 10,
-  },
-  image2: {
-    width: 35,
-    height: 35,
-  },
-  cartContainer: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-  },
-  cartCheckboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  label: {
-    fontSize: 16,
-    color: '#333',
-    marginBottom: 5,
-  },
-  checkbox: {
-    marginLeft: 10,
-  },
-  imageContainer: {},
-  image: {
-    width: 150,
-    height: 150,
-    borderRadius: 5,
-  },
-  categoryContainer: {
-    marginBottom: 30,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    width: '80%',
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 20,
-    alignItems: 'center',
-  },
-  modalCloseButton: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: '#00ba00',
-    borderRadius: 5,
-  },
-  modalCloseButtonText: {
-    color: '#fff',
-    fontSize: 16,
-  },
-});
 
 export default NewItemScreen;

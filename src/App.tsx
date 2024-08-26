@@ -6,7 +6,7 @@ import Home from './screens/Home/home.screen';
 function App(): React.JSX.Element {
   return (
     <SafeAreaView>
-      <Home />
+      <Newitem />
     </SafeAreaView>
   );
 }
