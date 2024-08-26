@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import {themes} from '../../styles/themes.styles';
+import { themes} from '../../styles/themes.styles';
 
 const {colors} = themes;
 
