@@ -9,12 +9,15 @@ import {Flex} from '../global.component';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCalculator} from '@fortawesome/free-solid-svg-icons/faCalculator';
 import {faShoppingCart} from '@fortawesome/free-solid-svg-icons/faShoppingCart';
+import numberFormat from '../../utils/number-format.util';
+
 
 type ListInformationsProps = {
   quantityCart: number | undefined;
+  price: number | undefined;
 };
 
-const ListInformations = ({quantityCart}: ListInformationsProps) => {
+const ListInformations = ({quantityCart, price}: ListInformationsProps) => {
   return (
     <Container>
       <Flex>
@@ -36,7 +39,7 @@ const ListInformations = ({quantityCart}: ListInformationsProps) => {
         />
         <View>
           <TitleInformations>Carrinho ({quantityCart})</TitleInformations>
-          <TextInformations>R$ 1,00</TextInformations>
+          <TextInformations>{numberFormat(price as number)}</TextInformations>
         </View>
       </Flex>
     </Container>

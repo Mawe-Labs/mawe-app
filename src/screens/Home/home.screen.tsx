@@ -36,6 +36,7 @@ interface ItemProps {
 interface CartProps {
   id: number;
   name: string;
+  value: number;
 }
 
 const renderCategories = (
@@ -44,6 +45,7 @@ const renderCategories = (
   cart: CartProps[],
   setChecked: (obj: CheckedState) => void,
   setCart: (newItem: any) => void,
+  setPrice: (value: number) => void,
 ) => {
   if (item.name !== 'Todos' && item.products.length > 0) {
     return (
@@ -61,7 +63,9 @@ const renderCategories = (
                   alt={item.name}
                 />
                 <View>
-                  <ProductText strike={checked[item.id]}>{item.name}</ProductText>
+                  <ProductText strike={checked[item.id]}>
+                    {item.name}
+                  </ProductText>
                   <ProductInformations>
                     1 un - {numberFormat(item.value)}
                   </ProductInformations>
@@ -74,13 +78,34 @@ const renderCategories = (
                   setChecked({...checked, [item.id]: newValue});
 
                   if (!checked[item.id]) {
-                    setCart((prevState: any) => [
-                      ...prevState,
-                      {id: item.id, name: item.name},
-                    ]);
+                    setCart((prevCart: any[]) => {
+                      let newCart;
+                      if (newValue) {
+                        newCart = [
+                          ...prevCart,
+                          {id: item.id, name: item.name, value: item.value},
+                        ];
+                      } else {
+                        newCart = prevCart.filter(
+                          (cartItem: any) => cartItem.id !== item.id,
+                        );
+                      }
+
+                      const newPrice = newCart.reduce(
+                        (acc, currentItem) => acc + currentItem.value,
+                        0,
+                      );
+                      setPrice(newPrice);
+
+                      return newCart;
+                    });
                   } else {
                     const newCart = cart.filter((cart) => cart.id !== item.id);
                     setCart(newCart);
+                    (setPrice as React.Dispatch<React.SetStateAction<number>>)(
+                      (prevPrice: number) =>
+                        Math.max(0, prevPrice - item.value),
+                    );
                   }
                 }}
               />
@@ -97,6 +122,7 @@ const renderCategories = (
 export const Home = () => {
   const [checked, setChecked] = useState<CheckedState>({});
   const [cart, setCart] = useState<CartProps[]>([]);
+  const [price, setPrice] = useState<number>(0);
 
   return (
     <View>
@@ -106,7 +132,7 @@ export const Home = () => {
         <FlatList
           data={categories}
           renderItem={({item}) =>
-            renderCategories(item, checked, cart, setChecked, setCart)
+            renderCategories(item, checked, cart, setChecked, setCart, setPrice)
           }
         />
       </View>
@@ -115,7 +141,7 @@ export const Home = () => {
         <FontAwesomeIcon icon={faAdd} size={35} style={{color: '#fff'}} />
       </CircleAddedItem>
 
-      <ListInformations quantityCart={cart?.length} />
+      <ListInformations quantityCart={cart?.length} price={price} />
     </View>
   );
 };
