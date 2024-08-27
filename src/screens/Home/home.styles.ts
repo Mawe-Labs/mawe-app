@@ -1,4 +1,4 @@
-import styled from 'styled-components/native';
+import styled, {css} from 'styled-components/native';
 import {themes} from '../../styles/themes.styles';
 
 const {colors} = themes;
@@ -25,8 +25,13 @@ export const ProductImage = styled.Image.attrs({
   margin: 0 15px;
 `;
 
-export const ProductText = styled.Text`
+type ProductText = {
+  strike: boolean;
+};
+
+export const ProductText = styled.Text<ProductText>`
   font-size: 22px;
+  text-decoration: ${props => props.strike && 'line-through'};
 `;
 
 export const ProductInformations = styled.Text`
