@@ -1,16 +1,19 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import styles from './header.styles';
+import {HeaderContainer, HeaderTitle} from './header.styles';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faBars} from '@fortawesome/free-solid-svg-icons/faBars';
 
 interface HeaderProps {
   title: string;
+  isMyList?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ title }) => {
+const Header: React.FC<HeaderProps> = ({title, isMyList}) => {
   return (
-    <View style={styles.headerContainer}>
-      <Text style={styles.headerTitle}>{title}</Text>
-    </View>
+    <HeaderContainer>
+      {isMyList && <FontAwesomeIcon icon={faBars} size={30} color="white" />}
+      <HeaderTitle>{title}</HeaderTitle>
+    </HeaderContainer>
   );
 };
 
