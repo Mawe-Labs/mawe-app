@@ -37,7 +37,7 @@ export const CircleAddedItem = styled.TouchableOpacity`
   position: absolute;
   bottom: 28%;
   right: 0;
-  margin-right: 10px;
+  margin-right: 20px;
   padding: 25px;
   background-color: ${colors.info};
   border-radius: 50px;
