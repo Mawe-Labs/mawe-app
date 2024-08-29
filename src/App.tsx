@@ -12,7 +12,7 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          headerShown: false, // Oculta o header para todas as telas
+          headerShown: false, 
         }}
       >
         <Stack.Screen name="Home" component={Home} />

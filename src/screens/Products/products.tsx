@@ -14,8 +14,7 @@ const Products: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('Todos');
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const categoryNames = categories.map(category => category.name);
-  const navigation = useNavigation();  // Acessa a função de navegação
-
+  const navigation = useNavigation(); 
   const handleSelect = (category: string) => {
     setSelectedCategory(category);
     setIsOpen(false);
