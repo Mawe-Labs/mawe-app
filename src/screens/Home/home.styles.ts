@@ -31,19 +31,9 @@ type ProductText = {
 
 export const ProductText = styled.Text<ProductText>`
   font-size: 22px;
-  text-decoration: ${props => props.strike && 'line-through'};
+  text-decoration: ${(props) => props.strike && 'line-through'};
 `;
 
 export const ProductInformations = styled.Text`
   font-size: 15px;
-`;
-
-export const CircleAddedItem = styled.TouchableOpacity`
-  position: absolute;
-  bottom: 25%;
-  right: 0;
-  margin-right: 10px;
-  padding: 25px;
-  background-color: ${colors.info};
-  border-radius: 50px;
 `;
