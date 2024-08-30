@@ -128,7 +128,7 @@ export const Home = () => {
     <View>
       <Header title={'Minha Lista'} isMyList />
 
-      <View style={{marginBottom: '70%'}}>
+      <View style={{marginBottom: '52%'}}>
         <FlatList
           data={categories}
           renderItem={({item}) =>
