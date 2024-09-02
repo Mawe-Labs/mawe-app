@@ -8,6 +8,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHome} from '@fortawesome/free-solid-svg-icons/faHome';
 import {faList} from '@fortawesome/free-solid-svg-icons/faList';
 import Lists from './screens/Lists/lists.component';
+import NewList from './screens/NewList/new-list.screen';
 
 const Drawer = createDrawerNavigator();
 
@@ -39,6 +40,13 @@ function App(): React.JSX.Element {
         <Drawer.Screen
           name="NewItem"
           component={NewItemScreen}
+          options={{
+            drawerItemStyle: {display: 'none'},
+          }}
+        />
+        <Drawer.Screen
+          name="NewList"
+          component={NewList}
           options={{
             drawerItemStyle: {display: 'none'},
           }}
