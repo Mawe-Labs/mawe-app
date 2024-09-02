@@ -14,7 +14,7 @@ export const HeaderContainer = styled.View<HeaderContainerProps>`
 `;
 
 export const HeaderTitle = styled.Text`
-  color: #ffffff;
+  color: #fffffff;
   font-size: 20px;
   font-weight: bold;
-`;
+  `;
