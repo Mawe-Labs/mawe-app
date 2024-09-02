@@ -1,28 +1,57 @@
 import React from 'react';
-<<<<<<< HEAD
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-=======
-import {SafeAreaView} from 'react-native';
->>>>>>> 068e7a52a7377912b8f00f5abdec3b134989f84b
+
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {NavigationContainer} from '@react-navigation/native';
 import Home from './screens/Home/home.screen';
-import Products from './screens/Products/products';
-import NewItem from './screens/NewItem/new-item.screen';
+import NewItemScreen from './screens/NewItem/new-item.screen';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faHome} from '@fortawesome/free-solid-svg-icons/faHome';
+import {faList} from '@fortawesome/free-solid-svg-icons/faList';
+import Lists from './screens/Lists/lists.component';
+import NewList from './screens/NewList/new-list.screen';
 
-const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
-function App() {
+function App(): React.JSX.Element {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false, 
-        }}
-      >
-        <Stack.Screen name="Products" component={Products} />
-        <Stack.Screen name="NewItem" component={NewItem} />
-        <Stack.Screen name="Home" component={Home} />
-      </Stack.Navigator>
+      <Drawer.Navigator
+        initialRouteName="Home"
+        screenOptions={{headerShown: false}}>
+        <Drawer.Screen
+          name="Home"
+          component={Home}
+          options={{
+            drawerIcon: () => (
+              <FontAwesomeIcon icon={faHome} size={25} color="gray" />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="Lists"
+          component={Lists}
+          options={{
+            drawerIcon: () => (
+              <FontAwesomeIcon icon={faList} size={25} color="gray" />
+            ),
+            drawerLabel: 'Suas listas'
+          }}
+        />
+        <Drawer.Screen
+          name="NewItem"
+          component={NewItemScreen}
+          options={{
+            drawerItemStyle: {display: 'none'},
+          }}
+        />
+        <Drawer.Screen
+          name="NewList"
+          component={NewList}
+          options={{
+            drawerItemStyle: {display: 'none'},
+          }}
+        />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }

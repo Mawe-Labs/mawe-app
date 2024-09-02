@@ -3,6 +3,7 @@ export const themes = {
     primary: '#12824F',
     secondary: '#88CAA5',
     info: '#1976D2',
+    error: '#f52c33',
     backgroundColor: '#E0E0E0',
     borderColor: '#E0E0E0',
     white: '#FFFFFF',

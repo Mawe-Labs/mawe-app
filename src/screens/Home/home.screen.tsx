@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {FlatList, ImageProps, Text, View} from 'react-native';
 import {
   CategoriesContainer,
-  CircleAddedItem,
   ProductContainer,
   ProductImage,
   ProductInformations,
@@ -15,6 +14,7 @@ import ListInformations from '../../components/ListInformations/list-information
 import {faAdd} from '@fortawesome/free-solid-svg-icons/faAdd';
 import Header from '../../components/Header/header.component';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import { CircleAddedItem } from '../../components/global.component';
 
 interface CheckedState {
   [key: number]: boolean;
@@ -128,7 +128,7 @@ export const Home = () => {
     <View>
       <Header title={'Minha Lista'} />
 
-      <View style={{marginBottom: '70%'}}>
+      <View style={{marginBottom: '52%'}}>
         <FlatList
           data={categories}
           renderItem={({item}) =>
@@ -137,7 +137,7 @@ export const Home = () => {
         />
       </View>
 
-      <CircleAddedItem>
+      <CircleAddedItem bottom={25}>
         <FontAwesomeIcon icon={faAdd} size={35} style={{color: '#fff'}} />
       </CircleAddedItem>
 
