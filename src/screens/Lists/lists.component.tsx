@@ -20,7 +20,7 @@ const Lists = () => {
 
   return (
     <View>
-      <Header title="Listas" isMyList />
+      <Header title="Listas" />
       <List>
         <LeftList>
           <FontAwesomeIcon icon={faListCheck} size={25} color="gray" />
@@ -30,12 +30,14 @@ const Lists = () => {
           </TouchableOpacity>
         </LeftList>
         <TouchableOpacity
-          onPress={() => navigation.dispatch(DrawerActions.jumpTo("Home"))}>
+          onPress={() => navigation.dispatch(DrawerActions.jumpTo('Home'))}>
           <FontAwesomeIcon icon={faArrowRight} size={25} color="gray" />
         </TouchableOpacity>
       </List>
       <AddedContainer>
-        <CircleAddedItem bottom={40}>
+        <CircleAddedItem
+          bottom={40}
+          onPress={() => navigation.dispatch(DrawerActions.jumpTo('NewList'))}>
           <FontAwesomeIcon icon={faAdd} size={35} style={{color: '#fff'}} />
         </CircleAddedItem>
       </AddedContainer>
