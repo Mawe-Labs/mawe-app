@@ -1,8 +1,8 @@
-// src/screens/Products/Products.styles.ts
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1, 
     padding: 0,
   },
   selectContainer: {
@@ -20,9 +20,7 @@ const styles = StyleSheet.create({
   icon: {
     marginLeft: 8,
   },
-  list: {
-    marginTop: 8,
-  },
+
   item: {
     padding: 16,
     marginVertical: 8,
@@ -61,7 +59,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
- 
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 20, 
+    right: 20, 
+    zIndex: 1,  
+    width: '100%', 
+    alignItems: 'center', 
+  },
 });
 
 export default styles;

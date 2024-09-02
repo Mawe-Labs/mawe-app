@@ -15,9 +15,9 @@ function App() {
           headerShown: false, 
         }}
       >
-        <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Products" component={Products} />
         <Stack.Screen name="NewItem" component={NewItem} />
+        <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   );
