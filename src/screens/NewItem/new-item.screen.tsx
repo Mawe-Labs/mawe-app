@@ -53,10 +53,6 @@ const NewItemScreen: React.FC = () => {
     setIsModalVisible(true);
   };
 
-  const handleAddToCart = () => {
-    console.log('Item adicionado ao carrinho');
-  };
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Header title={'Novo Item'} />
@@ -175,7 +171,7 @@ const NewItemScreen: React.FC = () => {
             resizeMode="contain"
           />
         )}
-        <TouchableOpacity style={styles.addButton} onPress={handleAddToCart}>
+        <TouchableOpacity style={styles.addButton}>
           <Text style={styles.addButtonText}>Adicionar ao Carrinho</Text>
         </TouchableOpacity>
       </View>

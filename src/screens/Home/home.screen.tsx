@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, ImageProps, Text, TouchableOpacity, View} from 'react-native';
 import {
   CategoriesContainer,
@@ -15,9 +15,9 @@ import {faAdd} from '@fortawesome/free-solid-svg-icons/faAdd';
 import Header from '../../components/Header/header.component';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {CircleAddedItem} from '../../components/global.component';
-import RoundButton from '../../components/Button/RoundButton';
 import {DrawerActions, useNavigation} from '@react-navigation/native';
 import {useProduct} from '../../context/product-edited.context';
+import {useProducts} from '../../context/products.context';
 
 interface CheckedState {
   [key: number]: boolean;
@@ -50,7 +50,12 @@ const renderCategories = (
   setChecked: (obj: CheckedState) => void,
   setCart: (newItem: any) => void,
   setPrice: (value: number) => void,
-  handleEditProduct: (id: number, name: string, value: string, category: string) => void,
+  handleEditProduct: (
+    id: number,
+    name: string,
+    value: string,
+    category: string,
+  ) => void,
 ) => {
   if (item.name !== 'Todos' && item.products.length > 0) {
     return (
@@ -69,7 +74,12 @@ const renderCategories = (
                 />
                 <TouchableOpacity
                   onPress={() =>
-                    handleEditProduct(item.id, item.name, (item.value * 100).toString(), item.category)
+                    handleEditProduct(
+                      item.id,
+                      item.name,
+                      (item.value * 100).toString(),
+                      item.category,
+                    )
                   }>
                   <ProductText strike={checked[item.id]}>
                     {item.name}
@@ -134,8 +144,18 @@ export const Home = () => {
 
   const navigation = useNavigation();
   const {setProduct} = useProduct();
+  const {products, setProducts} = useProducts();
 
-  const handleEditProduct = (id: number, name: string, value: string, category: string) => {
+  useEffect(() => {
+    setProducts(categories);
+  });
+
+  const handleEditProduct = (
+    id: number,
+    name: string,
+    value: string,
+    category: string,
+  ) => {
     navigation.dispatch(DrawerActions.jumpTo('EditItem'));
     setProduct({id, name, value, category});
   };
@@ -146,7 +166,7 @@ export const Home = () => {
 
       <View style={{marginBottom: '52%'}}>
         <FlatList
-          data={categories}
+          data={products}
           renderItem={({item}) =>
             renderCategories(
               item,
