@@ -6,7 +6,7 @@ import { styles } from './styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 type RoundButtonProps = {
-  onPress: () => void;
+  onPress?: () => void;
   style?: ViewStyle;
 };
 
