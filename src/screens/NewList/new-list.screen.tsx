@@ -26,7 +26,7 @@ const NewList = () => {
 
   return (
     <Container>
-      <Header title="Novo item" isCheck handleCheck={handleConfirmName} />
+      <Header title="Nova lista" isCheck handleCheck={handleConfirmName} />
       <InputControl>
         <InputText>Nome da lista</InputText>
         <Input

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {FlatList, ImageProps, Text, View} from 'react-native';
+import {FlatList, ImageProps, Text, TouchableOpacity, View} from 'react-native';
 import {
   CategoriesContainer,
   ProductContainer,
@@ -14,16 +14,20 @@ import ListInformations from '../../components/ListInformations/list-information
 import {faAdd} from '@fortawesome/free-solid-svg-icons/faAdd';
 import Header from '../../components/Header/header.component';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import { CircleAddedItem } from '../../components/global.component';
+import {CircleAddedItem} from '../../components/global.component';
+import RoundButton from '../../components/Button/RoundButton';
+import {DrawerActions, useNavigation} from '@react-navigation/native';
+import {useProduct} from '../../context/product-edited.context';
 
 interface CheckedState {
   [key: number]: boolean;
 }
 
-interface ProductProps {
+export interface ProductProps {
   id: number;
   image: string;
   name: string;
+  category: string;
   value: number;
 }
 
@@ -46,6 +50,7 @@ const renderCategories = (
   setChecked: (obj: CheckedState) => void,
   setCart: (newItem: any) => void,
   setPrice: (value: number) => void,
+  handleEditProduct: (id: number, name: string, value: string, category: string) => void,
 ) => {
   if (item.name !== 'Todos' && item.products.length > 0) {
     return (
@@ -62,14 +67,17 @@ const renderCategories = (
                   source={item.image as ImageProps}
                   alt={item.name}
                 />
-                <View>
+                <TouchableOpacity
+                  onPress={() =>
+                    handleEditProduct(item.id, item.name, (item.value * 100).toString(), item.category)
+                  }>
                   <ProductText strike={checked[item.id]}>
                     {item.name}
                   </ProductText>
                   <ProductInformations>
                     1 un - {numberFormat(item.value)}
                   </ProductInformations>
-                </View>
+                </TouchableOpacity>
               </View>
               <CheckBox
                 disabled={false}
@@ -124,6 +132,14 @@ export const Home = () => {
   const [cart, setCart] = useState<CartProps[]>([]);
   const [price, setPrice] = useState<number>(0);
 
+  const navigation = useNavigation();
+  const {setProduct} = useProduct();
+
+  const handleEditProduct = (id: number, name: string, value: string, category: string) => {
+    navigation.dispatch(DrawerActions.jumpTo('EditItem'));
+    setProduct({id, name, value, category});
+  };
+
   return (
     <View>
       <Header title={'Minha Lista'} />
@@ -132,7 +148,15 @@ export const Home = () => {
         <FlatList
           data={categories}
           renderItem={({item}) =>
-            renderCategories(item, checked, cart, setChecked, setCart, setPrice)
+            renderCategories(
+              item,
+              checked,
+              cart,
+              setChecked,
+              setCart,
+              setPrice,
+              handleEditProduct,
+            )
           }
         />
       </View>
