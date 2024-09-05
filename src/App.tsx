@@ -11,58 +11,61 @@ import Lists from './screens/Lists/lists.component';
 import NewList from './screens/NewList/new-list.screen';
 import EditItem from './screens/EditItem/edit-item.screen';
 import {ProductProvider} from './context/product-edited.context';
+import {ProductsProvider} from './context/products.context';
 
 const Drawer = createDrawerNavigator();
 
 function App(): React.JSX.Element {
   return (
     <ProductProvider>
-      <NavigationContainer>
-        <Drawer.Navigator
-          initialRouteName="Home"
-          screenOptions={{headerShown: false}}>
-          <Drawer.Screen
-            name="Home"
-            component={Home}
-            options={{
-              drawerIcon: () => (
-                <FontAwesomeIcon icon={faHome} size={25} color="gray" />
-              ),
-            }}
-          />
-          <Drawer.Screen
-            name="Lists"
-            component={Lists}
-            options={{
-              drawerIcon: () => (
-                <FontAwesomeIcon icon={faList} size={25} color="gray" />
-              ),
-              drawerLabel: 'Suas listas',
-            }}
-          />
-          <Drawer.Screen
-            name="NewItem"
-            component={NewItemScreen}
-            options={{
-              drawerItemStyle: {display: 'none'},
-            }}
-          />
-          <Drawer.Screen
-            name="NewList"
-            component={NewList}
-            options={{
-              drawerItemStyle: {display: 'none'},
-            }}
-          />
-          <Drawer.Screen
-            name="EditItem"
-            component={EditItem}
-            options={{
-              drawerItemStyle: {display: 'none'},
-            }}
-          />
-        </Drawer.Navigator>
-      </NavigationContainer>
+      <ProductsProvider>
+        <NavigationContainer>
+          <Drawer.Navigator
+            initialRouteName="Home"
+            screenOptions={{headerShown: false}}>
+            <Drawer.Screen
+              name="Home"
+              component={Home}
+              options={{
+                drawerIcon: () => (
+                  <FontAwesomeIcon icon={faHome} size={25} color="gray" />
+                ),
+              }}
+            />
+            <Drawer.Screen
+              name="Lists"
+              component={Lists}
+              options={{
+                drawerIcon: () => (
+                  <FontAwesomeIcon icon={faList} size={25} color="gray" />
+                ),
+                drawerLabel: 'Suas listas',
+              }}
+            />
+            <Drawer.Screen
+              name="NewItem"
+              component={NewItemScreen}
+              options={{
+                drawerItemStyle: {display: 'none'},
+              }}
+            />
+            <Drawer.Screen
+              name="NewList"
+              component={NewList}
+              options={{
+                drawerItemStyle: {display: 'none'},
+              }}
+            />
+            <Drawer.Screen
+              name="EditItem"
+              component={EditItem}
+              options={{
+                drawerItemStyle: {display: 'none'},
+              }}
+            />
+          </Drawer.Navigator>
+        </NavigationContainer>
+      </ProductsProvider>
     </ProductProvider>
   );
 }
