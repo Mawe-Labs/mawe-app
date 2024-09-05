@@ -67,6 +67,7 @@ const EditItem: React.FC = () => {
               style={styles.input}
               keyboardType="numeric"
               placeholder="Digite a quantidade"
+              value='1'
             />
           </View>
           <View style={styles.unitContainer}>
@@ -127,15 +128,6 @@ const EditItem: React.FC = () => {
             />
           )}
         </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Observações</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Observações"
-            value={observations}
-            onChangeText={setObservations}
-          />
-        </View>
         {selectedProduct && (
           <Image
             source={selectedProduct.image}
@@ -144,7 +136,7 @@ const EditItem: React.FC = () => {
           />
         )}
         <TouchableOpacity style={styles.addButton} onPress={handleAddToCart}>
-          <Text style={styles.addButtonText}>Adicionar ao Carrinho</Text>
+          <Text style={styles.addButtonText}>Editar produto</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
