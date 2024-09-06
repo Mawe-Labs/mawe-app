@@ -13,6 +13,8 @@ import Header from '../../components/Header/header.component';
 import {categories} from '../../mocks/categories.mock';
 import {styles} from './edit-item.styles';
 import {useProduct} from '../../context/product-edited.context';
+import {useProducts} from '../../context/products.context';
+import {DrawerActions, useNavigation} from '@react-navigation/native';
 
 const EditItem: React.FC = () => {
   const {product} = useProduct();
@@ -24,7 +26,9 @@ const EditItem: React.FC = () => {
   const [showCategories, setShowCategories] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
-  const [observations, setObservations] = useState('');
+
+  const {products, setProducts} = useProducts();
+  const navigation = useNavigation();
 
   useEffect(() => {
     setSelectedCategory(product?.category as string);
@@ -43,8 +47,23 @@ const EditItem: React.FC = () => {
     setShowCategories(false);
   };
 
-  const handleAddToCart = () => {
-    console.log('Item adicionado ao carrinho');
+  const handleEditProduct = () => {
+    const newProducts =
+      products &&
+      products.map((category) => {
+        const updatedProducts = category.products.map((prd) => {
+          if (prd.name === product?.name) {
+            return {...prd, name: searchText};
+          }
+          return prd;
+        });
+
+        return {...category, products: updatedProducts};
+      });
+
+    setProducts(newProducts);
+
+    navigation.dispatch(DrawerActions.jumpTo('Home'));
   };
 
   return (
@@ -56,7 +75,7 @@ const EditItem: React.FC = () => {
           <TextInput
             style={styles.input}
             placeholder="Digite o nome do item"
-            value={product?.name}
+            defaultValue={product?.name}
             onChangeText={setSearchText}
           />
         </View>
@@ -67,7 +86,7 @@ const EditItem: React.FC = () => {
               style={styles.input}
               keyboardType="numeric"
               placeholder="Digite a quantidade"
-              value='1'
+              value="1"
             />
           </View>
           <View style={styles.unitContainer}>
@@ -135,7 +154,7 @@ const EditItem: React.FC = () => {
             resizeMode="contain"
           />
         )}
-        <TouchableOpacity style={styles.addButton} onPress={handleAddToCart}>
+        <TouchableOpacity style={styles.addButton} onPress={handleEditProduct}>
           <Text style={styles.addButtonText}>Editar produto</Text>
         </TouchableOpacity>
       </View>

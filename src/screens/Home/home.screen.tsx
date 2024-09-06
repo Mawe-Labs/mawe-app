@@ -146,10 +146,6 @@ export const Home = () => {
   const {setProduct} = useProduct();
   const {products, setProducts} = useProducts();
 
-  useEffect(() => {
-    setProducts(categories);
-  });
-
   const handleEditProduct = (
     id: number,
     name: string,
@@ -163,22 +159,38 @@ export const Home = () => {
   return (
     <View>
       <Header title={'Minha Lista'} />
-
       <View style={{marginBottom: '52%'}}>
-        <FlatList
-          data={products}
-          renderItem={({item}) =>
-            renderCategories(
-              item,
-              checked,
-              cart,
-              setChecked,
-              setCart,
-              setPrice,
-              handleEditProduct,
-            )
-          }
-        />
+        {products?.length && products?.length > 0 ? (
+          <FlatList
+            data={products}
+            renderItem={({item}) =>
+              renderCategories(
+                item,
+                checked,
+                cart,
+                setChecked,
+                setCart,
+                setPrice,
+                handleEditProduct,
+              )
+            }
+          />
+        ) : (
+          <FlatList
+            data={categories}
+            renderItem={({item}) =>
+              renderCategories(
+                item,
+                checked,
+                cart,
+                setChecked,
+                setCart,
+                setPrice,
+                handleEditProduct,
+              )
+            }
+          />
+        )}
       </View>
 
       <CircleAddedItem bottom={25}>

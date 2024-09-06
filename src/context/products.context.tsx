@@ -1,4 +1,5 @@
 import React, {createContext, useState, useContext, ReactNode} from 'react';
+import { categories } from '../mocks/categories.mock';
 
 interface Products {
   id: number;
@@ -24,7 +25,7 @@ const ProductsContext = createContext<ProductsContextType | undefined>(undefined
 export const ProductsProvider: React.FC<{children: ReactNode}> = ({
   children,
 }) => {
-  const [products, setProducts] = useState<Categories[] | null>(null);
+  const [products, setProducts] = useState<Categories[] | null>(categories);
 
   return (
     <ProductsContext.Provider value={{products, setProducts}}>
