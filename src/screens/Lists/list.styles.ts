@@ -1,10 +1,5 @@
 import styled from 'styled-components/native';
 
-export const AddedContainer = styled.View`
-  display: flex;
-  height: 100%;
-`;
-
 export const List = styled.View`
   padding: 20px;
   flex-direction: row;

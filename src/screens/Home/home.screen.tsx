@@ -11,13 +11,11 @@ import {categories} from '../../mocks/categories.mock';
 import numberFormat from '../../utils/number-format.util';
 import CheckBox from '@react-native-community/checkbox';
 import ListInformations from '../../components/ListInformations/list-informations.component';
-import {faAdd} from '@fortawesome/free-solid-svg-icons/faAdd';
 import Header from '../../components/Header/header.component';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {CircleAddedItem} from '../../components/global.component';
 import {DrawerActions, useNavigation} from '@react-navigation/native';
 import {useProduct} from '../../context/product-edited.context';
 import {useProducts} from '../../context/products.context';
+import RoundButton from '../../components/Button/round-button.component';
 
 interface CheckedState {
   [key: number]: boolean;
@@ -159,7 +157,7 @@ export const Home = () => {
   return (
     <View>
       <Header title={'Minha Lista'} />
-      <View style={{marginBottom: '52%'}}>
+      <View style={{marginBottom: '50%'}}>
         {products?.length && products?.length > 0 ? (
           <FlatList
             data={products}
@@ -193,9 +191,9 @@ export const Home = () => {
         )}
       </View>
 
-      <CircleAddedItem bottom={25}>
-        <FontAwesomeIcon icon={faAdd} size={35} style={{color: '#fff'}} />
-      </CircleAddedItem>
+      <RoundButton
+        onPress={() => navigation.dispatch(DrawerActions.jumpTo('Products'))}
+      />
 
       <ListInformations quantityCart={cart?.length} price={price} />
     </View>

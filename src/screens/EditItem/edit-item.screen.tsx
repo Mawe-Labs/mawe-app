@@ -16,7 +16,7 @@ import {useProduct} from '../../context/product-edited.context';
 import {useProducts} from '../../context/products.context';
 import {DrawerActions, useNavigation} from '@react-navigation/native';
 
-const EditItem: React.FC = () => {
+const EditItem = () => {
   const {product} = useProduct();
 
   const [isCheckedCart, setIsCheckedCart] = useState(false);

@@ -13,7 +13,7 @@ import Header from '../../components/Header/header.component';
 import { categories } from '../../mocks/categories.mock';
 import { styles } from './new-item.styles';
 
-const NewItemScreen: React.FC = () => {
+const NewItemScreen = () => {
   const [isCheckedCart, setIsCheckedCart] = useState(false);
   const [selectedUnit, setSelectedUnit] = useState('');
   const [price, setPrice] = useState('');

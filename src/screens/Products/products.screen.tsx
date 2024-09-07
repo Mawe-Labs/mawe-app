@@ -1,18 +1,24 @@
 import React, {useState} from 'react';
-import {View, Text, FlatList, TouchableOpacity, Image} from 'react-native';
+import {FlatList} from 'react-native';
 import {DrawerActions, useNavigation} from '@react-navigation/native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {
-  faChevronDown,
-  faChevronUp,
-  faAdd,
-} from '@fortawesome/free-solid-svg-icons';
+import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
 import Header from '../../components/Header/header.component';
 import {categories} from '../../mocks/categories.mock';
-import styles from '../Products/products.styles';
-import RoundButton from '../../components/Button/RoundButton';
+import RoundButton from '../../components/Button/round-button.component';
+import {
+  Container,
+  Item,
+  ItemText,
+  ProductImage,
+  ProductItem,
+  ProductName,
+  ProductPrice,
+  SelectContainer,
+  SelectedText,
+} from './products.styles';
 
-const Products: React.FC = () => {
+const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('Todos');
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const categoryNames = categories.map((category) => category.name);
@@ -24,19 +30,19 @@ const Products: React.FC = () => {
   };
 
   const renderCategoryItem = ({item}: {item: string}) => (
-    <TouchableOpacity
-      style={[styles.item, selectedCategory === item && styles.selectedItem]}
+    <Item
+      isSelectedCategory={selectedCategory === item}
       onPress={() => handleSelect(item)}>
-      <Text style={styles.itemText}>{item}</Text>
-    </TouchableOpacity>
+      <ItemText>{item}</ItemText>
+    </Item>
   );
 
   const renderProductItem = ({item}: {item: any}) => (
-    <View style={styles.productItem}>
-      <Image source={item.image} style={styles.productImage} />
-      <Text style={styles.productName}>{item.name}</Text>
-      <Text style={styles.productPrice}>R$ {item.value.toFixed(2)}</Text>
-    </View>
+    <ProductItem>
+      <ProductImage source={item.image} />
+      <ProductName>{item.name}</ProductName>
+      <ProductPrice>R$ {item.value.toFixed(2)}</ProductPrice>
+    </ProductItem>
   );
 
   const filteredProducts =
@@ -46,21 +52,19 @@ const Products: React.FC = () => {
           ?.products || [];
 
   return (
-    <View style={styles.container}>
+    <Container>
       <Header title={'Produtos'} />
-      <TouchableOpacity
-        style={styles.selectContainer}
-        onPress={() => setIsOpen(!isOpen)}>
-        <Text style={styles.selectedText}>
+      <SelectContainer onPress={() => setIsOpen(!isOpen)}>
+        <SelectedText>
           {selectedCategory ? selectedCategory : 'Selecione uma categoria'}
-        </Text>
+        </SelectedText>
         <FontAwesomeIcon
           icon={isOpen ? faChevronUp : faChevronDown}
           size={24}
           color="#000"
-          style={styles.icon}
+          style={{marginLeft: 8}}
         />
-      </TouchableOpacity>
+      </SelectContainer>
 
       {isOpen && (
         <FlatList
@@ -74,13 +78,14 @@ const Products: React.FC = () => {
         data={filteredProducts}
         renderItem={renderProductItem}
         keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={styles.productList}
+        contentContainerStyle={{marginTop: 16, paddingHorizontal: 16}}
       />
 
       <RoundButton
         onPress={() => navigation.dispatch(DrawerActions.jumpTo('NewItem'))}
+        style={{bottom: '6%'}}
       />
-    </View>
+    </Container>
   );
 };
 

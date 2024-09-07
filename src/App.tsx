@@ -12,6 +12,7 @@ import NewList from './screens/NewList/new-list.screen';
 import EditItem from './screens/EditItem/edit-item.screen';
 import {ProductProvider} from './context/product-edited.context';
 import {ProductsProvider} from './context/products.context';
+import Products from './screens/Products/products.screen';
 
 const Drawer = createDrawerNavigator();
 
@@ -45,6 +46,13 @@ function App(): React.JSX.Element {
             <Drawer.Screen
               name="NewItem"
               component={NewItemScreen}
+              options={{
+                drawerItemStyle: {display: 'none'},
+              }}
+            />
+            <Drawer.Screen
+              name="Products"
+              component={Products}
               options={{
                 drawerItemStyle: {display: 'none'},
               }}

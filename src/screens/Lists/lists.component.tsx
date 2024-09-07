@@ -1,12 +1,9 @@
 import React from 'react';
 import Header from '../../components/Header/header.component';
-import {CircleAddedItem} from '../../components/global.component';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faAdd} from '@fortawesome/free-solid-svg-icons/faAdd';
 import {faListCheck} from '@fortawesome/free-solid-svg-icons/faListCheck';
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import {
-  AddedContainer,
   List,
   ListCount,
   ListText,
@@ -14,6 +11,7 @@ import {
 } from './list.styles';
 import {TouchableOpacity, View} from 'react-native';
 import {DrawerActions, useNavigation} from '@react-navigation/native';
+import RoundButton from '../../components/Button/round-button.component';
 
 const Lists = () => {
   const navigation = useNavigation();
@@ -34,13 +32,7 @@ const Lists = () => {
           <FontAwesomeIcon icon={faArrowRight} size={25} color="gray" />
         </TouchableOpacity>
       </List>
-      <AddedContainer>
-        <CircleAddedItem
-          bottom={40}
-          onPress={() => navigation.dispatch(DrawerActions.jumpTo('NewList'))}>
-          <FontAwesomeIcon icon={faAdd} size={35} style={{color: '#fff'}} />
-        </CircleAddedItem>
-      </AddedContainer>
+      <RoundButton style={{top: '420%'}} />
     </View>
   );
 };
