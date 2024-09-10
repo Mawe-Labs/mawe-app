@@ -17,6 +17,9 @@ import {useProduct} from '../../context/product-edited.context';
 import {useProducts} from '../../context/products.context';
 import RoundButton from '../../components/Button/round-button.component';
 
+import {faTrash} from '@fortawesome/free-solid-svg-icons/faTrash';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+
 interface CheckedState {
   [key: number]: boolean;
 }
@@ -54,6 +57,7 @@ const renderCategories = (
     value: string,
     category: string,
   ) => void,
+  handleDeleteItem: (id: number) => void,
 ) => {
   if (item.name !== 'Todos' && item.products.length > 0) {
     return (
@@ -87,44 +91,53 @@ const renderCategories = (
                   </ProductInformations>
                 </TouchableOpacity>
               </View>
-              <CheckBox
-                disabled={false}
-                value={checked[item.id]}
-                onValueChange={(newValue: boolean) => {
-                  setChecked({...checked, [item.id]: newValue});
+              <View
+                style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
+                <TouchableOpacity onPress={() => handleDeleteItem(item.id)}>
+                  <FontAwesomeIcon icon={faTrash} size={25} color="red" />
+                </TouchableOpacity>
+                <CheckBox
+                  disabled={false}
+                  value={checked[item.id]}
+                  onValueChange={(newValue: boolean) => {
+                    setChecked({...checked, [item.id]: newValue});
 
-                  if (!checked[item.id]) {
-                    setCart((prevCart: any[]) => {
-                      let newCart;
-                      if (newValue) {
-                        newCart = [
-                          ...prevCart,
-                          {id: item.id, name: item.name, value: item.value},
-                        ];
-                      } else {
-                        newCart = prevCart.filter(
-                          (cartItem: any) => cartItem.id !== item.id,
+                    if (!checked[item.id]) {
+                      setCart((prevCart: any[]) => {
+                        let newCart;
+                        if (newValue) {
+                          newCart = [
+                            ...prevCart,
+                            {id: item.id, name: item.name, value: item.value},
+                          ];
+                        } else {
+                          newCart = prevCart.filter(
+                            (cartItem: any) => cartItem.id !== item.id,
+                          );
+                        }
+
+                        const newPrice = newCart.reduce(
+                          (acc, currentItem) => acc + currentItem.value,
+                          0,
                         );
-                      }
+                        setPrice(newPrice);
 
-                      const newPrice = newCart.reduce(
-                        (acc, currentItem) => acc + currentItem.value,
-                        0,
+                        return newCart;
+                      });
+                    } else {
+                      const newCart = cart.filter(
+                        (cart) => cart.id !== item.id,
                       );
-                      setPrice(newPrice);
-
-                      return newCart;
-                    });
-                  } else {
-                    const newCart = cart.filter((cart) => cart.id !== item.id);
-                    setCart(newCart);
-                    (setPrice as React.Dispatch<React.SetStateAction<number>>)(
-                      (prevPrice: number) =>
+                      setCart(newCart);
+                      (
+                        setPrice as React.Dispatch<React.SetStateAction<number>>
+                      )((prevPrice: number) =>
                         Math.max(0, prevPrice - item.value),
-                    );
-                  }
-                }}
-              />
+                      );
+                    }
+                  }}
+                />
+              </View>
             </ProductContainer>
           )}
         />
@@ -141,8 +154,18 @@ export const Home = () => {
   const [price, setPrice] = useState<number>(0);
 
   const navigation = useNavigation();
-  const {setProduct} = useProduct();
+  const {product, setProduct} = useProduct();
   const {products, setProducts} = useProducts();
+
+  const handleDeleteItem = (id: number) => {
+    if (products) {
+      const newProducts = products.map((item) => ({
+        ...item,
+        products: item.products.filter((prdItem) => prdItem.id !== id),
+      }));
+      setProducts(newProducts);
+    }
+  };
 
   const handleEditProduct = (
     id: number,
@@ -170,6 +193,7 @@ export const Home = () => {
                 setCart,
                 setPrice,
                 handleEditProduct,
+                handleDeleteItem,
               )
             }
           />
@@ -185,6 +209,7 @@ export const Home = () => {
                 setCart,
                 setPrice,
                 handleEditProduct,
+                handleDeleteItem,
               )
             }
           />
