@@ -1,72 +1,64 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components/native';
+import {themes} from '../../styles/themes.styles';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
-    padding: 0,
-  },
-  selectContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 8,
-    marginBottom: 16,
-  },
-  selectedText: {
-    fontSize: 18,
-  },
-  icon: {
-    marginLeft: 8,
-  },
+type ItemProps = {
+  isSelectedCategory: boolean;
+};
 
-  item: {
-    padding: 16,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 8,
-  },
-  selectedItem: {
-    backgroundColor: '#ccc',
-  },
-  itemText: {
-    fontSize: 18,
-  },
-  productList: {
-    marginTop: 16,
-    paddingHorizontal: 16,
-  },
-  productItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
-    backgroundColor: '#fff',
-    padding: 16,
-    borderRadius: 8,
-  },
-  productImage: {
-    width: 50,
-    height: 50,
-    marginRight: 16,
-  },
-  productName: {
-    fontSize: 16,
-    flex: 1,
-  },
-  productPrice: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  buttonContainer: {
-    position: 'absolute',
-    bottom: 20, 
-    right: 20, 
-    zIndex: 1,  
-    width: '100%', 
-    alignItems: 'center', 
-  },
-});
+const {colors} = themes;
 
-export default styles;
+export const Container = styled.View`
+  flex: 1;
+  padding: 0;
+`;
+
+export const SelectContainer = styled.TouchableOpacity`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  margin-bottom: 16px;
+`;
+
+export const SelectedText = styled.Text`
+  font-size: 18px;
+`;
+
+export const Item = styled.TouchableOpacity<ItemProps>`
+  padding: 16px;
+  margin: 8px 16px;
+  background-color: ${(props) =>
+    props.isSelectedCategory ? '#ccc' : '#e0e0e0'};
+  border-radius: 8px;
+`;
+
+export const ItemText = styled.Text`
+  font-size: 18px;
+`;
+
+export const ProductItem = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 16px;
+  background-color: ${colors.white};
+  padding: 16px;
+  border-radius: 8px;
+`;
+
+export const ProductImage = styled.Image`
+  width: 50px;
+  height: 50px;
+  margin-right: 16px;
+`;
+
+export const ProductName = styled.Text`
+  font-size: 16px;
+  flex: 1;
+`;
+
+export const ProductPrice = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
+`;

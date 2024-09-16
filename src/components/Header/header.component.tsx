@@ -13,7 +13,7 @@ interface HeaderProps {
   handleCheck?: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({title, isCheck, handleCheck}) => {
+const Header = ({title, isCheck, handleCheck}: HeaderProps) => {
   const navigation = useNavigation();
 
   return (
