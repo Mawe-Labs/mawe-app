@@ -184,10 +184,8 @@ export const Home = () => {
         (itemAcc, item) => itemAcc + item.value,
         0
       );
-      console.log(`Container total: ${itemsTotal}`);
       return acc + itemsTotal;
     }, 0);
-    console.log(`Final total: ${total}`);
     return total;
   }, [products]);
 
