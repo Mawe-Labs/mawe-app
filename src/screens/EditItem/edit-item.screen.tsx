@@ -53,7 +53,7 @@ const EditItem = () => {
       products.map((category) => {
         const updatedProducts = category.products.map((prd) => {
           if (prd.name === product?.name) {
-            return {...prd, name: searchText};
+            return {...prd, name: searchText, category: selectedCategory};
           }
           return prd;
         });
