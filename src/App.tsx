@@ -7,12 +7,14 @@ import NewItemScreen from './screens/NewItem/new-item.screen';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHome} from '@fortawesome/free-solid-svg-icons/faHome';
 import {faList} from '@fortawesome/free-solid-svg-icons/faList';
+import {faHistory} from '@fortawesome/free-solid-svg-icons/faHistory';
 import Lists from './screens/Lists/lists.component';
 import NewList from './screens/NewList/new-list.screen';
 import EditItem from './screens/EditItem/edit-item.screen';
 import {ProductProvider} from './context/product-edited.context';
 import {ProductsProvider} from './context/products.context';
 import Products from './screens/Products/products.screen';
+import History from './screens/History/history';
 
 const Drawer = createDrawerNavigator();
 
@@ -41,6 +43,16 @@ function App(): React.JSX.Element {
                   <FontAwesomeIcon icon={faList} size={25} color="gray" />
                 ),
                 drawerLabel: 'Suas listas',
+              }}
+            />
+            <Drawer.Screen
+              name="History"
+              component={History}
+              options={{
+                drawerIcon: () => (
+                  <FontAwesomeIcon icon={faHistory} size={25} color="gray" />
+                ),
+                drawerLabel: 'Hisórico de Compras',
               }}
             />
             <Drawer.Screen
