@@ -152,6 +152,7 @@ export const Home = () => {
   const [checked, setChecked] = useState<CheckedState>({});
   const [cart, setCart] = useState<CartProps[]>([]);
   const [price, setPrice] = useState<number>(0);
+  const [onlyProducts, setOnlyProducts] = useState<ProductProps[]>([]);
 
   const navigation = useNavigation();
   const {product, setProduct} = useProduct();
@@ -176,6 +177,19 @@ export const Home = () => {
     navigation.dispatch(DrawerActions.jumpTo('EditItem'));
     setProduct({id, name, value, category});
   };
+
+  const priceList = React.useMemo(() => {
+    const total = products?.reduce((acc, curr) => {
+      const itemsTotal = curr.products.reduce(
+        (itemAcc, item) => itemAcc + item.value,
+        0
+      );
+      console.log(`Container total: ${itemsTotal}`);
+      return acc + itemsTotal;
+    }, 0);
+    console.log(`Final total: ${total}`);
+    return total;
+  }, [products]);
 
   return (
     <View>
@@ -220,7 +234,12 @@ export const Home = () => {
         onPress={() => navigation.dispatch(DrawerActions.jumpTo('Products'))}
       />
 
-      <ListInformations quantityCart={cart?.length} price={price} />
+      <ListInformations
+        quantityCart={cart?.length}
+        price={price}
+        quantityList={products?.length}
+        priceList={priceList || 0}
+      />
     </View>
   );
 };

@@ -15,9 +15,11 @@ import numberFormat from '../../utils/number-format.util';
 type ListInformationsProps = {
   quantityCart: number | undefined;
   price: number | undefined;
+  quantityList: number | undefined;
+  priceList: number | undefined;
 };
 
-const ListInformations = ({quantityCart, price}: ListInformationsProps) => {
+const ListInformations = ({quantityCart, price, quantityList, priceList}: ListInformationsProps) => {
   return (
     <Container>
       <Flex>
@@ -27,8 +29,8 @@ const ListInformations = ({quantityCart, price}: ListInformationsProps) => {
           style={{marginRight: 10}}
         />
         <View>
-          <TitleInformations>Total (2)</TitleInformations>
-          <TextInformations>R$ 5,00</TextInformations>
+          <TitleInformations>Total ({quantityList})</TitleInformations>
+          <TextInformations>{numberFormat(priceList as number)}</TextInformations>
         </View>
       </Flex>
       <Flex>
