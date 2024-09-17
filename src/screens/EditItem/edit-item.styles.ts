@@ -83,6 +83,13 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
   },
+  removeButton: {
+    backgroundColor: 'red',
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 20,
+  },
   addButtonText: {
     color: '#ffffff',
     fontSize: 16,

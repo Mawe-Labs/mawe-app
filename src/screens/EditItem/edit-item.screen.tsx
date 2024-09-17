@@ -66,6 +66,18 @@ const EditItem = () => {
     navigation.dispatch(DrawerActions.jumpTo('Home'));
   };
 
+  const handleRemoveProduct = (id: number | undefined) => {
+    if (products) {
+      const newProducts = products.map((item) => ({
+        ...item,
+        products: item.products.filter((prdItem) => prdItem.id !== id),
+      }));
+      setProducts(newProducts);
+    }
+
+    navigation.dispatch(DrawerActions.jumpTo('Home'));
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Header title={'Editar item'} />
@@ -155,7 +167,12 @@ const EditItem = () => {
           />
         )}
         <TouchableOpacity style={styles.addButton} onPress={handleEditProduct}>
-          <Text style={styles.addButtonText}>Editar produto</Text>
+          <Text style={styles.addButtonText}>Salvar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.removeButton}
+          onPress={() => handleRemoveProduct(product?.id)}>
+          <Text style={styles.addButtonText}>Excluir produto</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
