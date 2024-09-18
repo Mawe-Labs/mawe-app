@@ -12,11 +12,11 @@ const InputScreen: React.FC = () => {
 
   const handleAddCategory = () => {
     if (category.trim()) {
-      setErrorMessage(''); // Limpa mensagem de erro
+      setErrorMessage(''); 
       navigation.navigate('Categories', { newCategory: category });
-      setCategory(''); // Limpa o campo de input após a submissão
+      setCategory(''); 
     } else {
-      setErrorMessage('Preencha o campo'); // Mostra mensagem de erro
+      setErrorMessage('Preencha o campo'); 
     }
   };
 

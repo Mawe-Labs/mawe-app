@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, SafeAreaView } from 'react-native';
 import Header from '../../components/Header/header.component';
 import Button from '../../components/Button/RoundButton';
-import styles from './categoriesStyles'; // Importação dos estilos
+import styles from './categoriesStyles'; 
 
 interface Category {
   id: string;
@@ -31,7 +31,6 @@ const CategoriesScreen: React.FC<{ navigation: any; route: any }> = ({ navigatio
       const newCategory = route.params.newCategory;
       const newCategoryId = (categories.length + 1).toString();
       
-      // Adiciona a nova categoria à lista
       setCategories((prevCategories) => [
         ...prevCategories,
         { id: newCategoryId, name: newCategory },
