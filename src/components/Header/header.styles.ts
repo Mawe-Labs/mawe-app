@@ -5,7 +5,7 @@ type HeaderContainerProps = {
 };
 
 export const HeaderContainer = styled.View<HeaderContainerProps>`
-  background-color: #00ba00;
+  background-color: #12824F;
   padding: 16px;
   align-items: center;
   justify-content: ${props => props.isCheck ? 'space-between' : 'start'};
@@ -14,7 +14,7 @@ export const HeaderContainer = styled.View<HeaderContainerProps>`
 `;
 
 export const HeaderTitle = styled.Text`
-  color: #fffffff;
+  color: #fff;
   font-size: 20px;
   font-weight: bold;
   `;

@@ -1,3 +1,56 @@
 {
-  "java.configuration.updateBuildConfiguration": "interactive"
+  "workbench.colorTheme": "Default Dark Modern",
+  "symbols.hidesExplorerArrows": false,
+  "editor.fontFamily": "JetBrains Mono",
+  "editor.fontSize": 14,
+  "editor.lineHeight": 1.8,
+  "editor.rulers": [80, 120],
+  "workbench.startupEditor": "newUntitledFile",
+  "editor.renderLineHighlight": "gutter",
+  "editor.fontLigatures": true,
+  "workbench.editor.labelFormat": "short",
+  "editor.defaultFormatter": "biomejs.biome",
+  "explorer.compactFolders": false,
+  "editor.semanticHighlighting.enabled": false,
+  "breadcrumbs.enabled": false,
+  "editor.minimap.enabled": false,
+  "editor.scrollbar.vertical": "hidden",
+  "editor.scrollbar.horizontal": "hidden",
+  "workbench.statusBar.visible": false,
+  "apc.electron": {
+      "titleBarStyle": "hiddenInset",
+      "trafficLightPosition": {}
+  },
+  "apc.header": {
+      "height": 36
+  },
+  "apc.listRow": {
+      "height": 23
+  },
+  
+
+  "apc.stylesheet": {
+      ".title-label > h2": "display: none",
+      ".editor-action": "display: none",
+      ".pane-body": "padding: 8px",
+      ".pane-header": "padding: 0 8px"
+  },
+  "window.commandCenter": false,
+  "workbench.layoutControl.enabled": false,
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+      "packege.json": " tsconfig*, vite*, pnpm-lock*, packege-lock*"
+  },
+  "workbench.editor.empty.hint": "hidden",
+  "explorer.confirmDelete": false,
+   "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome",
+    "editor.codeActionsOnSave": {
+    "quickfix.biome": "explicit"
+  }
+   },
+ 
+ 
+ 
+  "workbench.iconTheme": "material-icon-theme"
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import {SafeAreaView, TouchableOpacity, View} from 'react-native';
 import Header from '../../components/Header/header.component';
 import {CircleAddedItem} from '../../components/global.component';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -12,14 +13,13 @@ import {
   ListText,
   LeftList,
 } from './list.styles';
-import {TouchableOpacity, View} from 'react-native';
 import {DrawerActions, useNavigation} from '@react-navigation/native';
 
 const Lists = () => {
   const navigation = useNavigation();
 
   return (
-    <View>
+    <SafeAreaView style={{flex: 0}}>
       <Header title="Listas" />
       <List>
         <LeftList>
@@ -36,12 +36,12 @@ const Lists = () => {
       </List>
       <AddedContainer>
         <CircleAddedItem
-          bottom={40}
+          bottom={33}
           onPress={() => navigation.dispatch(DrawerActions.jumpTo('NewList'))}>
           <FontAwesomeIcon icon={faAdd} size={35} style={{color: '#fff'}} />
         </CircleAddedItem>
       </AddedContainer>
-    </View>
+    </SafeAreaView>
   );
 };
 

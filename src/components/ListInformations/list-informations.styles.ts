@@ -20,5 +20,6 @@ export const TitleInformations = styled.Text`
 `;
 
 export const TextInformations = styled.Text`
-  font-size: 23px;
+  font-weight: bold;
+  font-size: 20px;
 `;

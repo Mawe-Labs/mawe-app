@@ -7,6 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  SafeAreaView,
   } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Header from '../../components/Header/header.component';
@@ -58,6 +59,7 @@ const NewItemScreen: React.FC = () => {
   };
 
   return (
+    <SafeAreaView style={{flex: 1}}> 
     <ScrollView contentContainerStyle={styles.container}>
       <Header title={'Novo Item'} />
       <View style={styles.form}>
@@ -124,19 +126,9 @@ const NewItemScreen: React.FC = () => {
           />
         </View>
         <View style={styles.cartContainer}>
-          <Text style={styles.label}>Inserir no Carrinho</Text>
           <View style={styles.cartCheckboxContainer}>
-            <Image 
-              source={{ uri: 'https://i.pinimg.com/564x/59/e5/53/59e5531ab44ffbedbc0f40ecf97d5385.jpg' }} 
-              style={styles.image2} 
-              resizeMode="cover"
-            />
-            <CheckBox
-              value={isCheckedCart}
-              onValueChange={setIsCheckedCart}
-              boxType='square'
-              style={styles.checkbox}
-            />
+           
+           
           </View>
         </View>
         <View style={styles.categoryContainer}>
@@ -180,6 +172,7 @@ const NewItemScreen: React.FC = () => {
         </TouchableOpacity>
       </View>
     </ScrollView>
+    </SafeAreaView>
   );
 };
 

@@ -23,7 +23,7 @@ const ListInformations = ({quantityCart, price}: ListInformationsProps) => {
       <Flex>
         <FontAwesomeIcon
           icon={faCalculator}
-          size={45}
+          size={40}
           style={{marginRight: 10}}
         />
         <View>
@@ -34,7 +34,7 @@ const ListInformations = ({quantityCart, price}: ListInformationsProps) => {
       <Flex>
         <FontAwesomeIcon
           icon={faShoppingCart}
-          size={45}
+          size={40}
           style={{marginRight: 10}}
         />
         <View>

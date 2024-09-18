@@ -1,0 +1,13 @@
+[
+  { "id": "2", "image": "banana", "name": "Banana", "value": 20 },
+  { "id": "3", "image": "limon", "name": "Limão", "value": 20 },
+  { "id": "4", "image": "corn", "name": "Milho", "value": 20 },
+  { "id": "5", "image": "meat", "name": "Carne", "value": 20 },
+  { "id": "6", "image": "sausage", "name": "Salsicha", "value": 20 },
+  { "id": "7", "image": "carrot", "name": "Cenoura", "value": 20 },
+  { "id": "8", "image": "detergent", "name": "Detergente", "value": 20 },
+  { "id": "9", "image": "coca", "name": "Coca", "value": 20 },
+  { "id": "10", "image": "popcorn", "name": "Pipoca", "value": 20 },
+  { "id": "11", "image": "gratedCheese", "name": "Queijo ralado", "value": 20 },
+  { "id": "29", "image": "bread", "name": "Pão", "value": 20 }
+]

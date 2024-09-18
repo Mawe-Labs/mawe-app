@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {FlatList, ImageProps, Text, View} from 'react-native';
+import {FlatList, ImageProps, Text, View, SafeAreaView} from 'react-native';
 import {
   CategoriesContainer,
   ProductContainer,
@@ -119,13 +119,13 @@ const renderCategories = (
   }
 };
 
-export const Home = () => {
+export const Home = ({ navigation }: any) => {
   const [checked, setChecked] = useState<CheckedState>({});
   const [cart, setCart] = useState<CartProps[]>([]);
   const [price, setPrice] = useState<number>(0);
 
   return (
-    <View>
+    <SafeAreaView style={{flex: 0}}>
       <Header title={'Minha Lista'} />
 
       <View style={{marginBottom: '52%'}}>
@@ -137,12 +137,15 @@ export const Home = () => {
         />
       </View>
 
-      <CircleAddedItem bottom={25}>
-        <FontAwesomeIcon icon={faAdd} size={35} style={{color: '#fff'}} />
+      <CircleAddedItem
+        bottom={20}
+        onPress={() => navigation.navigate('Lists')}
+      >
+        <FontAwesomeIcon icon={faAdd} size={30} style={{color: '#fff'}} />
       </CircleAddedItem>
 
       <ListInformations quantityCart={cart?.length} price={price} />
-    </View>
+    </SafeAreaView>
   );
 };
 
