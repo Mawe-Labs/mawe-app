@@ -24,7 +24,7 @@ const EditItem = () => {
   const [price, setPrice] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [showCategories, setShowCategories] = useState(false);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState(product?.name || '');
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
 
   const {products, setProducts} = useProducts();
@@ -32,6 +32,7 @@ const EditItem = () => {
 
   useEffect(() => {
     setSelectedCategory(product?.category as string);
+    setSearchText(product?.name as string);
   }, [product?.category]);
 
   const formatPrice = (value: string) => {
@@ -48,20 +49,38 @@ const EditItem = () => {
   };
 
   const handleEditProduct = () => {
-    const newProducts =
-      products &&
-      products.map((category) => {
-        const updatedProducts = category.products.map((prd) => {
-          if (prd.name === product?.name) {
-            return {...prd, name: searchText, category: selectedCategory};
-          }
-          return prd;
-        });
+    if (!products) return;
 
-        return {...category, products: updatedProducts};
-      });
+    let updatedProduct: { name: string; category: string; id: number; image: any; value: number; } | null = null;
 
-    setProducts(newProducts);
+    // Remove o produto da categoria antiga
+    const newProducts = products.map((category) => ({
+      ...category,
+      products: category.products.filter((prd) => {
+        if (prd.name === product?.name) {
+          updatedProduct = {
+            ...prd,
+            name: searchText,
+            category: selectedCategory,
+          };
+          return false;
+        }
+        return true;
+      }),
+    }));
+
+    // Adiciona o produto à nova categoria
+    const finalProducts = newProducts.map((category) => {
+      if (category.name === selectedCategory && updatedProduct) {
+        return {
+          ...category,
+          products: [...category.products, updatedProduct],
+        };
+      }
+      return category;
+    });
+
+    setProducts(finalProducts);
 
     navigation.dispatch(DrawerActions.jumpTo('Home'));
   };
