@@ -53,7 +53,6 @@ const EditItem = () => {
 
     let updatedProduct: { name: string; category: string; id: number; image: any; value: number; } | null = null;
 
-    // Remove o produto da categoria antiga
     const newProducts = products.map((category) => ({
       ...category,
       products: category.products.filter((prd) => {
@@ -69,7 +68,6 @@ const EditItem = () => {
       }),
     }));
 
-    // Adiciona o produto à nova categoria
     const finalProducts = newProducts.map((category) => {
       if (category.name === selectedCategory && updatedProduct) {
         return {
