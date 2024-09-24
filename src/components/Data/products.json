@@ -1,0 +1,68 @@
+[
+  {
+    "id": "2",
+    "name": "Banana",
+    "value": 20,
+    "image": "../../assets/products/banana.png"
+  },
+  {
+    "id": "3",
+    "name": "Limão",
+    "value": 20,
+    "image": "../../assets/products/limon.png"
+  },
+  {
+    "id": "4",
+    "name": "Milho",
+    "value": 20,
+    "image": "../../assets/products/corn.png"
+  },
+  {
+    "id": "5",
+    "name": "Carne",
+    "value": 20,
+    "image": "../../assets/products/meat.png"
+  },
+  {
+    "id": "6",
+    "name": "Salsicha",
+    "value": 20,
+    "image": "../../assets/products/sausage.png"
+  },
+  {
+    "id": "7",
+    "name": "Cenoura",
+    "value": 20,
+    "image": "../../assets/products/carrot.png"
+  },
+  {
+    "id": "8",
+    "name": "Detergente",
+    "value": 20,
+    "image": "../../assets/products/detergent.png"
+  },
+  {
+    "id": "9",
+    "name": "Coca",
+    "value": 20,
+    "image": "../../assets/products/coca.png"
+  },
+  {
+    "id": "10",
+    "name": "Pipoca",
+    "value": 20,
+    "image": "../../assets/products/popcorn.png"
+  },
+  {
+    "id": "11",
+    "name": "Queijo ralado",
+    "value": 20,
+    "image": "../../assets/products/gratedCheese.png"
+  },
+  {
+    "id": "29",
+    "name": "Pão",
+    "value": 20,
+    "image": "../../assets/products/bread.png"
+  }
+]
