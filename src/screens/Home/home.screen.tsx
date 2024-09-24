@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {FlatList, ImageProps, Text, TouchableOpacity, View} from 'react-native';
 import {
   CategoriesContainer,
@@ -17,7 +17,6 @@ import {useProduct} from '../../context/product-edited.context';
 import {useProducts} from '../../context/products.context';
 import RoundButton from '../../components/Button/round-button.component';
 
-import {faTrash} from '@fortawesome/free-solid-svg-icons/faTrash';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 interface CheckedState {
@@ -93,9 +92,6 @@ const renderCategories = (
               </View>
               <View
                 style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
-                <TouchableOpacity onPress={() => handleDeleteItem(item.id)}>
-                  <FontAwesomeIcon icon={faTrash} size={25} color="red" />
-                </TouchableOpacity>
                 <CheckBox
                   disabled={false}
                   value={checked[item.id]}
@@ -178,17 +174,37 @@ export const Home = () => {
     setProduct({id, name, value, category});
   };
 
-  const priceList = React.useMemo(() => {
-    const total = products?.reduce((acc, curr) => {
-      const itemsTotal = curr.products.reduce(
-        (itemAcc, item) => itemAcc + item.value,
-        0
-      );
-      console.log(`Container total: ${itemsTotal}`);
-      return acc + itemsTotal;
+  const priceList = useMemo(() => {
+    if (!products) return 0;
+
+    const uniqueProductIds = new Set();
+
+    const total = products.reduce((acc, category) => {
+      if (category.name === 'Todos') return acc;
+
+      const categoryTotal = category.products.reduce((itemAcc, item) => {
+        if (!uniqueProductIds.has(item.id)) {
+          uniqueProductIds.add(item.id);
+          return itemAcc + item.value;
+        }
+        return itemAcc;
+      }, 0);
+
+      return acc + categoryTotal;
     }, 0);
-    console.log(`Final total: ${total}`);
+
     return total;
+  }, [products]);
+
+  const totalProductCount = useMemo(() => {
+    if (!products) return 0;
+
+    return products.reduce((total, category) => {
+      if (category.name !== 'Todos' && category.products.length > 0) {
+        return total + category.products.length;
+      }
+      return total;
+    }, 0);
   }, [products]);
 
   return (
@@ -237,7 +253,7 @@ export const Home = () => {
       <ListInformations
         quantityCart={cart?.length}
         price={price}
-        quantityList={products?.length}
+        quantityList={totalProductCount}
         priceList={priceList || 0}
       />
     </View>
