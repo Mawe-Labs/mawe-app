@@ -51,7 +51,13 @@ const EditItem = () => {
   const handleEditProduct = () => {
     if (!products) return;
 
-    let updatedProduct: { name: string; category: string; id: number; image: any; value: number; } | null = null;
+    let updatedProduct: {
+      name: string;
+      category: string;
+      id: number;
+      image: any;
+      value: number;
+    } | null = null;
 
     const newProducts = products.map((category) => ({
       ...category,
@@ -81,6 +87,7 @@ const EditItem = () => {
     setProducts(finalProducts);
 
     navigation.dispatch(DrawerActions.jumpTo('Home'));
+
   };
 
   const handleRemoveProduct = (id: number | undefined) => {
