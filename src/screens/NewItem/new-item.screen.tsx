@@ -120,19 +120,9 @@ const NewItemScreen = () => {
           />
         </View>
         <View style={styles.cartContainer}>
-          <Text style={styles.label}>Inserir no Carrinho</Text>
           <View style={styles.cartCheckboxContainer}>
-            <Image 
-              source={{ uri: 'https://i.pinimg.com/564x/59/e5/53/59e5531ab44ffbedbc0f40ecf97d5385.jpg' }} 
-              style={styles.image2} 
-              resizeMode="cover"
-            />
-            <CheckBox
-              value={isCheckedCart}
-              onValueChange={setIsCheckedCart}
-              boxType='square'
-              style={styles.checkbox}
-            />
+            
+          
           </View>
         </View>
         <View style={styles.categoryContainer}>
