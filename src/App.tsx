@@ -3,7 +3,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import CategoriesScreen from './screens/Categories/categories';
-import InputScreen from './screens/CreateCategories/create'; // Ajuste o caminho conforme necessário
+import InputScreen from './screens/CreateCategories/create'; 
 import Home from './screens/Home/home.screen';
 import NewItemScreen from './screens/NewItem/new-item.screen';
 import NewList from './screens/NewList/new-list.screen';
